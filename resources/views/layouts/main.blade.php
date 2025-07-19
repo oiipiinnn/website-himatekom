@@ -18,6 +18,8 @@
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
+    <!-- Font Awesome 6 for better social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/elegant-icons.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
@@ -35,66 +37,74 @@
 
     @yield('content')
 
-
     <footer class="footer">
         <div class="container">
-
             <div class="footer__option">
                 <div class="row">
+                    <!-- Tentang Kami Section -->
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="footer__option__item">
-                            <h5>About us</h5>
-                            <p>Formed in 2006 by Matt Hobbs and Cael Jones, Videoprah is an award-winning, full-service
-                                production company specializing.</p>
-                            <a href="#" class="read__more">Read more <span class="arrow_right"></span></a>
+                            <h5>Tentang Kami</h5>
+                            <p>Himpunan Mahasiswa Teknik Komputer (HIMATEKOM) adalah Himpunan di bawah naungan
+                                Departemen Teknik Komputer Fakultas Teknologi Informasi Universitas Andalas</p>
+                            <a href="/tentang-kami" class="read__more">Read more <span class="arrow_right"></span></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-3">
+
+                    <!-- Social Media Section -->
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="footer__option__item">
-                            <h5>Who we are</h5>
-                            <ul>
-                                <li><a href="#">Team</a></li>
-                                <li><a href="#">Carrers</a></li>
-                                <li><a href="#">Contact us</a></li>
-                                <li><a href="#">Locations</a></li>
-                            </ul>
+                            <h5>Connect With Us</h5>
+                            <p>Ikuti media sosial kami untuk mendapatkan update terbaru tentang kegiatan dan event
+                                menarik dari Himatekom!</p>
+                            <div class="footer__social" style="margin-top: 20px;">
+                                <a href="https://www.instagram.com/himatekom_unand/" class="social-icon"
+                                    title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/company/himatekom/" class="social-icon"
+                                    title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://www.youtube.com/@himatekomunand4/" class="social-icon" title="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                <a href="#" class="social-icon" title="TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-3">
-                        <div class="footer__option__item">
-                            <h5>Our work</h5>
-                            <ul>
-                                <li><a href="#">Feature</a></li>
-                                <li><a href="#">Latest</a></li>
-                                <li><a href="#">Browse Archive</a></li>
-                                <li><a href="#">Video for web</a></li>
-                            </ul>
-                        </div>
-                    </div>
+
+                    <!-- Logo Section -->
                     <div class="col-lg-4 col-md-12">
-                        <div class="footer__option__item">
-                            <h5>Newsletter</h5>
-                            <p>Videoprah is an award-winning, full-service production company specializing.</p>
-                            <form action="#">
-                                <input type="text" placeholder="Email">
-                                <button type="submit"><i class="fa fa-send"></i></button>
-                            </form>
+                        <div class="footer__option__item text-center">
+                            <div class="footer__logo" style="margin-bottom: 20px;">
+                                <img src="{{ asset('img/logo.png') }}" alt="Himatekom Logo"
+                                    style="width: 120px; height: auto; margin-bottom: 15px;">
+                            </div>
+                            <h5 style="color: #ffffff; margin-bottom: 10px;">HIMATEKOM UNAND</h5>
+                            <p style="color: #adadad; font-size: 14px;">
+                                Himpunan Mahasiswa<br>
+                                Teknik Komputer<br>
+                                Universitas Andalas
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Copyright Section -->
             <div class="footer__copyright">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p class="footer__copyright__text">Copyright &copy;
+                        <p class="footer__copyright__text">
+                            Copyright &copy;
                             <script>
                                 document.write(new Date().getFullYear());
                             </script>
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
-                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            Himatekom UNAND. All rights reserved.
                         </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>
                 </div>
             </div>
@@ -121,7 +131,94 @@
                 navbar.classList.remove("scrolled");
             }
         };
+
+        // Add hover effects for social media icons - Updated for new design
+        document.querySelectorAll('.social-icon').forEach(function(link) {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
     </script>
+
+    <style>
+        /* Additional styles for better footer appearance */
+        .footer__social {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff !important;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
+
+        .social-icon[title="Instagram"]:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white !important;
+        }
+
+        .social-icon[title="LinkedIn"]:hover {
+            background: #0077b5;
+            color: white !important;
+        }
+
+        .social-icon[title="YouTube"]:hover {
+            background: #ff0000;
+            color: white !important;
+        }
+
+        .social-icon[title="TikTok"]:hover {
+            background: #000000;
+            color: white !important;
+        }
+
+        .footer__logo img {
+            transition: transform 0.3s ease;
+        }
+
+        .footer__logo img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer__option__item {
+                margin-bottom: 30px;
+                text-align: center;
+            }
+
+            .footer__social {
+                text-align: center;
+            }
+
+            .footer__social a {
+                margin: 0 10px;
+            }
+        }
+    </style>
 </body>
 
 </html>
