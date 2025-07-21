@@ -76,7 +76,7 @@ class StudentController extends Controller
             'phone' => 'nullable|string|max:20',
             'batch' => 'required|string|max:10',
             'work_photo' => 'required|image|mimes:jpeg,png,jpg|max:5120', // 5MB
-            'casual_photo' => 'required|image|mimes:jpeg,png,jpg|max:5120', // 5MB
+            'casual_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:5120', // 5MB
             'validation_document' => 'required|file|mimes:jpeg,png,jpg,pdf|max:10240', // 10MB
             'skills' => 'nullable|string',
             'hobbies' => 'nullable|string',

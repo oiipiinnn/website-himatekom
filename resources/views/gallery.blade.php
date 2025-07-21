@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title center-title">
-                        <span>Our Gallery</span>
+                        <span>Saksikan Perjalanan Panjang HIMATEKOM</span>
                         <h2>Gallery</h2>
                     </div>
                 </div>

@@ -23,7 +23,6 @@
 @endsection
 
 @section('content')
-    <!-- Statistics Cards -->
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -90,7 +89,6 @@
         </div>
     </div>
 
-    <!-- Filters -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
@@ -156,7 +154,6 @@
         </div>
     </div>
 
-    <!-- Bulk Actions -->
     <div class="card shadow mb-4" id="bulkActionsCard" style="display: none;">
         <div class="card-header py-3 bg-info">
             <h6 class="m-0 font-weight-bold text-white">
@@ -175,7 +172,6 @@
         </div>
     </div>
 
-    <!-- Students Table -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="d-flex justify-content-between align-items-center">
@@ -229,18 +225,36 @@
                                     <td>{{ $student->batch }}</td>
                                     <td>{{ $student->email }}</td>
                                     <td>
-                                        @if ($student->status == 'pending')
-                                            <span class="badge badge-warning">Pending</span>
-                                        @elseif($student->status == 'approved')
-                                            <span class="badge badge-success">Approved</span>
-                                        @else
-                                            <span class="badge badge-danger">Rejected</span>
-                                        @endif
+                                        {{-- Tag Status --}}
+                                        @php
+                                            $statusClass = '';
+                                            $statusText = '';
+                                            switch ($student->status) {
+                                                case 'pending':
+                                                    $statusClass = 'badge bg-warning text-dark';
+                                                    $statusText = 'Pending';
+                                                    break;
+                                                case 'approved':
+                                                    $statusClass = 'badge bg-success';
+                                                    $statusText = 'Approved';
+                                                    break;
+                                                case 'rejected':
+                                                    $statusClass = 'badge bg-danger';
+                                                    $statusText = 'Rejected';
+                                                    break;
+                                                default:
+                                                    $statusClass = 'badge bg-secondary';
+                                                    $statusText = 'Unknown';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <span class="{{ $statusClass }}">{{ $statusText }}</span>
+
                                         @if (!$student->is_active)
-                                            <br><span class="badge badge-secondary">Inactive</span>
+                                            <span class="badge bg-secondary">Inactive</span>
                                         @endif
                                         @if (!$student->show_in_public)
-                                            <br><span class="badge badge-dark">Hidden</span>
+                                            <span class="badge bg-dark">Hidden</span>
                                         @endif
                                     </td>
                                     <td>{{ $student->created_at->format('d/m/Y H:i') }}</td>
@@ -305,7 +319,6 @@
                     </table>
                 </div>
 
-                <!-- Pagination -->
                 <div class="d-flex justify-content-center">
                     {{ $students->links() }}
                 </div>
@@ -319,7 +332,6 @@
         </div>
     </div>
 
-    <!-- Reject Modal -->
     <div class="modal fade" id="rejectModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -346,7 +358,6 @@
         </div>
     </div>
 
-    <!-- Bulk Reject Modal -->
     <div class="modal fade" id="bulkRejectModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -377,7 +388,6 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Checkbox handling
             const masterCheck = document.getElementById('masterCheck');
             const studentCheckboxes = document.querySelectorAll('.student-checkbox');
             const bulkActionsCard = document.getElementById('bulkActionsCard');
@@ -405,7 +415,6 @@
             });
         });
 
-        // Individual actions
         function approveStudent(id) {
             if (confirm('Apakah Anda yakin ingin menyetujui pendaftaran mahasiswa ini?')) {
                 fetch(`/admin/students/${id}/approve`, {
@@ -455,7 +464,6 @@
             }
         }
 
-        // Bulk actions
         function bulkApprove() {
             const checked = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(cb => cb.value);
             if (checked.length === 0) return;

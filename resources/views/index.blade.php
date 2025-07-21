@@ -90,8 +90,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title center-title">
-                        <span>Our Division</span>
-                        <h2>Division</h2>
+                        <span>Operasional HIMATEKOM</span>
+                        <h2>Bidang</h2>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,8 @@
                         <div class="services__item">
                             <div class="services__item__icon">
                                 @if ($division->icon)
-                                    <img src="{{ asset('storage/' . $division->icon) }}" alt="{{ $division->name }}">
+                                    <img src="{{ asset('storage/' . $division->icon) }}" alt="{{ $division->name }}"
+                                        style="width: 70%">
                                 @else
                                     <img src="{{ asset('img/icons/si-1.png') }}" alt="{{ $division->name }}">
                                 @endif
@@ -126,7 +127,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title center-title">
-                        <span>Our Blog</span>
+                        <span>Terbaru dari HIMATEKOM</span>
                         <h2>Blog Update</h2>
                     </div>
                 </div>
@@ -185,7 +186,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title center-title">
-                    <span>Ayo Saksikan Perjalanan</span>
+                    <span>Saksikan Perjalanan Kami</span>
                     <h2>Galeri</h2>
                 </div>
             </div>

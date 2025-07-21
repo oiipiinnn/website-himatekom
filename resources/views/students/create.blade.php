@@ -42,7 +42,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             color: #ffffff;
-            padding: 15px;
+            padding: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
         }
@@ -463,6 +463,9 @@
                                 <div class="row">
                                     <div class="col-md-4 mb-4">
                                         <label class="form-label-custom required-field">Foto Baju Kerja Himatekom</label>
+                                        <div class="form-help-text mb-2">
+                                            Wajib, akan ditampilkan sebagai cover
+                                        </div>
                                         <div class="file-upload-area"
                                             onclick="document.getElementById('work_photo').click()">
                                             <i class="fas fa-camera fa-2x text-muted mb-3"></i>
@@ -480,7 +483,10 @@
                                     </div>
 
                                     <div class="col-md-4 mb-4">
-                                        <label class="form-label-custom required-field">Foto Bebas</label>
+                                        <label class="form-label-custom">Foto Bebas</label>
+                                        <div class="form-help-text mb-2">
+                                            Opsional, supaya tambah keren
+                                        </div>
                                         <div class="file-upload-area"
                                             onclick="document.getElementById('casual_photo').click()">
                                             <i class="fas fa-user fa-2x text-muted mb-3"></i>
@@ -667,12 +673,14 @@
 
                                 <div class="alert"
                                     style="background: rgba(0, 103, 56, 0.1); border: 1px solid #006738; color: #ffffff; border-radius: 15px; padding: 20px;">
-                                    <h6><i class="fas fa-info-circle"></i> Informasi Penting</h6>
-                                    <ul class="mb-0">
+                                    <h6 style="color: #e74a3b; margin-bottom:10px;"><i class="fas fa-info-circle"></i>
+                                        Informasi Penting</h6>
+                                    <ul>
                                         <li>Data akan direview oleh admin sebelum ditampilkan di website</li>
                                         <li>Pastikan semua informasi yang dimasukkan benar dan valid</li>
                                         <li>Foto dan dokumen harus jelas dan dapat dibaca</li>
-                                        <li>Anda akan mendapat notifikasi melalui email setelah data disetujui</li>
+                                        <li>Akan sulit untuk merubah data dikemudian hari (Harus melalui admin), sehingga
+                                            pastikan semua benar terlebih dahulu</li>
                                     </ul>
                                 </div>
                             </div>

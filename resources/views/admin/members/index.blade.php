@@ -214,7 +214,7 @@
                                                 class="rounded-circle"
                                                 style="width: 50px; height: 50px; object-fit: cover;">
                                             @if ($member->student_id)
-                                                <span class="badge badge-success position-absolute"
+                                                <span class="badge bg-success position-absolute"
                                                     style="top: -5px; right: -5px; font-size: 10px;"
                                                     title="Terhubung dengan data mahasiswa">
                                                     <i class="fas fa-link"></i>
@@ -225,28 +225,52 @@
                                     <td>
                                         <strong>{{ $member->name }}</strong>
                                         <br><span class="text-primary">{{ $member->position }}</span>
-                                        @if ($member->bio)
-                                            <br><small class="text-muted">{{ Str::limit($member->bio, 50) }}</small>
+                                        @if ($member->student->bio)
+                                            <br><small
+                                                class="text-muted">{{ Str::limit($member->student->bio, 50) }}</small>
                                         @endif
                                     </td>
                                     <td>{{ $member->nim }}</td>
                                     <td>
-                                        <span class="badge badge-info">{{ $member->division->name }}</span>
+                                        <span class="badge bg-primary">{{ $member->division->name }}</span>
                                     </td>
                                     <td>
-                                        <span
-                                            class="badge badge-{{ $member->position_level <= 2 ? 'warning' : 'secondary' }}">
-                                            Level {{ $member->position_level }}
-                                        </span>
+                                        @if ($member->position_level == 1)
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-crown"></i> Level {{ $member->position_level }}
+                                            </span>
+                                        @elseif($member->position_level == 2)
+                                            <span class="badge bg-warning">
+                                                <i class="fas fa-star"></i> Level {{ $member->position_level }}
+                                            </span>
+                                        @elseif($member->position_level == 3)
+                                            <span class="badge bg-info">
+                                                <i class="fas fa-users-cog"></i> Level {{ $member->position_level }}
+                                            </span>
+                                        @else
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-user"></i> Level {{ $member->position_level }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td>{{ $member->batch }}</td>
                                     <td>
-                                        {!! $member->status_badge !!}
-                                        @if (!$member->is_active)
-                                            <br><span class="badge badge-secondary">Inactive</span>
+                                        @if ($member->status == 'active')
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check-circle"></i> Aktif
+                                            </span>
+                                        @elseif($member->status == 'alumni')
+                                            <span class="badge bg-info">
+                                                <i class="fas fa-graduation-cap"></i> Alumni
+                                            </span>
+                                        @else
+                                            <span class="badge bg-warning">
+                                                <i class="fas fa-pause-circle"></i> Tidak Aktif
+                                            </span>
                                         @endif
-                                        @if ($member->is_alumni)
-                                            <br><span class="badge badge-info">Alumni</span>
+
+                                        @if (!$member->is_active)
+                                            <br><span class="badge bg-secondary">Inactive</span>
                                         @endif
                                     </td>
                                     <td>
@@ -257,7 +281,7 @@
                                                     <br>Berakhir: {{ $member->end_date->format('M Y') }}
                                                 @endif
                                                 @if ($member->tenure)
-                                                    <br>Masa: {{ $member->tenure }} bulan
+                                                    <br><span class="badge bg-info">{{ $member->tenure }} bulan</span>
                                                 @endif
                                             </small>
                                         @else
@@ -265,18 +289,17 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="btn-group-vertical btn-group-sm w-100">
+                                        <div class="btn-group" role="group">
                                             <a href="{{ route('admin.members.show', $member) }}"
-                                                class="btn btn-info btn-sm" title="Detail">
-                                                <i class="fas fa-eye"></i> Detail
+                                                class="btn btn-sm btn-info" title="Detail">
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('admin.members.edit', $member) }}"
-                                                class="btn btn-warning btn-sm" title="Edit">
-                                                <i class="fas fa-edit"></i> Edit
+                                                class="btn btn-sm btn-warning" title="Edit">
+                                                <i class="fas fa-edit"></i>
                                             </a>
-
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <button type="button" class="btn btn-secondary dropdown-toggle"
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-secondary dropdown-toggle"
                                                     data-bs-toggle="dropdown">
                                                     <i class="fas fa-cog"></i>
                                                 </button>
@@ -337,17 +360,18 @@
                 </div>
             @else
                 <div class="text-center py-5">
-                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">Tidak ada data anggota</h5>
-                    <p class="text-muted">Belum ada anggota yang terdaftar atau sesuai dengan filter Anda.</p>
-                    <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Tambah Anggota Pertama
-                    </a>
+                    <div class="text-muted">
+                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <h5>Tidak ada data anggota</h5>
+                        <p>Belum ada anggota yang terdaftar atau sesuai dengan filter Anda.</p>
+                        <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Anggota Pertama
+                        </a>
+                    </div>
                 </div>
             @endif
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -453,14 +477,6 @@
 
         .border-left-warning {
             border-left: 0.25rem solid #f6c23e !important;
-        }
-
-        .btn-group-vertical .btn {
-            margin-bottom: 2px;
-        }
-
-        .btn-group-vertical .btn:last-child {
-            margin-bottom: 0;
         }
     </style>
 @endsection

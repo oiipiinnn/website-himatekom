@@ -20,7 +20,7 @@
     <!-- Breadcrumb End -->
 
     <!-- Hero Section Begin -->
-    <section class="about spad">
+    <section class="about" style="padding-top: 100px">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -55,7 +55,6 @@
                                     <div class="form-group">
                                         <label>Pencarian</label>
                                         <div class="input-with-icon">
-                                            <i class="fa fa-search"></i>
                                             <input type="text" name="search" placeholder="Nama, NIM, atau email..."
                                                 value="{{ request('search') }}" class="form-control">
                                         </div>
@@ -399,6 +398,38 @@
 @endsection
 
 <style>
+    /* Warna background dropdown */
+    .filter-form .form-control {
+        background: rgba(0, 0, 0, 0.8);
+        /* Background hitam dengan opacity */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #ffffff;
+        /* Warna text tetap putih */
+    }
+
+    /* Warna saat dropdown dibuka */
+    .filter-form .form-control option {
+        background-color: #1a1a1a;
+        /* Background gelap untuk options */
+        color: #ffffff;
+        /* Warna text putih */
+    }
+
+    /* Warna saat hover pada options */
+    .filter-form .form-control option:hover {
+        background-color: #006738;
+        /* Warna hijau saat hover */
+    }
+
+    /* Styling untuk focus state */
+    .filter-form .form-control:focus {
+        background: rgba(0, 0, 0, 0.9);
+        border-color: #006738;
+        color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 103, 56, 0.25);
+    }
+
     /* Enhanced Styles */
     .filter-wrapper {
         background: linear-gradient(135deg, rgba(0, 103, 56, 0.1), rgba(0, 103, 56, 0.05));
@@ -461,7 +492,7 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 10px;
         color: #ffffff;
-        padding: 12px 15px;
+        padding: 10px 15px;
         transition: all 0.3s ease;
     }
 
