@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Videograph Template">
@@ -8,13 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Himatekom | Unand</title>
-
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="icon" href="{{ asset('img/logo.png') }}">
-
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" type="text/css">
@@ -25,18 +22,16 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
-</head>
 
+    @stack('styles')
+</head>
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
     @include('partials.navbar')
-
     @yield('content')
-
     <footer class="footer">
         <div class="container">
             <div class="footer__option">
@@ -50,7 +45,6 @@
                             <a href="/tentang-kami" class="read__more">Read more <span class="arrow_right"></span></a>
                         </div>
                     </div>
-
                     <!-- Social Media Section -->
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="footer__option__item">
@@ -75,7 +69,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Logo Section -->
                     <div class="col-lg-4 col-md-12">
                         <div class="footer__option__item text-center">
@@ -93,7 +86,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Copyright Section -->
             <div class="footer__copyright">
                 <div class="row">
@@ -111,7 +103,6 @@
         </div>
     </footer>
     <!-- Footer Section End -->
-
     <!-- Js Plugins -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -131,19 +122,16 @@
                 navbar.classList.remove("scrolled");
             }
         };
-
         // Add hover effects for social media icons - Updated for new design
         document.querySelectorAll('.social-icon').forEach(function(link) {
             link.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-5px)';
             });
-
             link.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
             });
         });
     </script>
-
     <style>
         /* Additional styles for better footer appearance */
         .footer__social {
@@ -153,7 +141,6 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .social-icon {
             width: 45px;
             height: 45px;
@@ -168,57 +155,48 @@
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
-
         .social-icon:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             text-decoration: none;
         }
-
         .social-icon[title="Instagram"]:hover {
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
             color: white !important;
         }
-
         .social-icon[title="LinkedIn"]:hover {
             background: #0077b5;
             color: white !important;
         }
-
         .social-icon[title="YouTube"]:hover {
             background: #ff0000;
             color: white !important;
         }
-
         .social-icon[title="TikTok"]:hover {
             background: #000000;
             color: white !important;
         }
-
         .footer__logo img {
             transition: transform 0.3s ease;
         }
-
         .footer__logo img:hover {
             transform: scale(1.1);
         }
-
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .footer__option__item {
                 margin-bottom: 30px;
                 text-align: center;
             }
-
             .footer__social {
                 text-align: center;
             }
-
             .footer__social a {
                 margin: 0 10px;
             }
         }
     </style>
-</body>
 
+    @stack('scripts')
+</body>
 </html>

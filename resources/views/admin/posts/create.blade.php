@@ -1,8 +1,6 @@
 @extends('admin.layouts.app')
-
 @section('title', 'Tambah Post')
 @section('page-title', 'Tambah Post')
-
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -28,8 +26,18 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Tags</label>
+                    <input type="text" name="tags" class="form-control @error('tags') is-invalid @enderror"
+                        value="{{ old('tags') }}" placeholder="pisahkan dengan koma, contoh: teknologi, programming, web">
+                    <small class="text-muted">Pisahkan tags dengan koma (,)</small>
+                    @error('tags')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Konten Post *</label>
-                    <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="10"
+                    <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="15"
                         placeholder="Tulis konten post di sini..." required>{{ old('content') }}</textarea>
                     @error('content')
                         <div class="invalid-feedback">{{ $message }}</div>

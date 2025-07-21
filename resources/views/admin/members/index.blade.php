@@ -1,76 +1,466 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Kelola Anggota')
-@section('page-title', 'Kelola Anggota')
+@section('title', 'Data Anggota Pengurus')
+@section('page-title', 'Data Anggota Pengurus')
 
 @section('page-actions')
-    <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Tambah Anggota
-    </a>
+    <div class="btn-group">
+        <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Anggota
+        </a>
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fas fa-download"></i> Export
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ route('admin.members.export') }}">Export Semua</a></li>
+            @foreach ($divisions as $division)
+                <li><a class="dropdown-item" href="{{ route('admin.members.export') }}?division={{ $division->id }}">Export
+                        {{ $division->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
 @endsection
 
 @section('content')
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Foto</th>
-                        <th>Nama</th>
-                        <th>NIM</th>
-                        <th>Divisi</th>
-                        <th>Posisi</th>
-                        <th>Angkatan</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($members as $index => $member)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>
-                            @if($member->photo)
-                                <img src="{{ $member->photo_url }}" width="40" height="40" class="rounded-circle">
-                            @else
-                                <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                    <i class="fas fa-user text-white"></i>
-                                </div>
-                            @endif
-                        </td>
-                        <td>{{ $member->name }}</td>
-                        <td>{{ $member->nim }}</td>
-                        <td>{{ $member->division->name }}</td>
-                        <td>{{ $member->position }}</td>
-                        <td>{{ $member->batch }}</td>
-                        <td>
-                            <span class="badge bg-{{ $member->is_active ? 'success' : 'danger' }}">
-                                {{ $member->is_active ? 'Aktif' : 'Tidak Aktif' }}
-                            </span>
-                        </td>
-                        <td>
-                            <a href="{{ route('admin.members.edit', $member) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form action="{{ route('admin.members.destroy', $member) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="9" class="text-center">Belum ada anggota</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Anggota</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['total'] }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Anggota Aktif</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['active'] }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pimpinan</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['leaders'] }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-crown fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Alumni</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['alumni'] }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Filters -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ route('admin.members.index') }}">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama, NIM..."
+                            value="{{ request('search') }}">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="division" class="form-control">
+                            <option value="">Semua Divisi</option>
+                            @foreach ($divisions as $division)
+                                <option value="{{ $division->id }}"
+                                    {{ request('division') == $division->id ? 'selected' : '' }}>
+                                    {{ $division->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="batch" class="form-control">
+                            <option value="">Semua Angkatan</option>
+                            @foreach ($batches as $batch)
+                                <option value="{{ $batch }}" {{ request('batch') == $batch ? 'selected' : '' }}>
+                                    {{ $batch }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="status" class="form-control">
+                            <option value="">Semua Status</option>
+                            @foreach ($statuses as $key => $label)
+                                <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="position_level" class="form-control">
+                            <option value="">Semua Level</option>
+                            @foreach ($positionLevels as $level => $label)
+                                <option value="{{ $level }}"
+                                    {{ request('position_level') == $level ? 'selected' : '' }}>
+                                    Level {{ $level }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> Filter
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <label class="me-2">Urutkan:</label>
+                            <select name="sort" class="form-control me-2" style="width: auto;">
+                                <option value="position_level" {{ request('sort') == 'position_level' ? 'selected' : '' }}>
+                                    Level Posisi</option>
+                                <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Nama</option>
+                                <option value="nim" {{ request('sort') == 'nim' ? 'selected' : '' }}>NIM</option>
+                                <option value="batch" {{ request('sort') == 'batch' ? 'selected' : '' }}>Angkatan</option>
+                                <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>Tanggal
+                                    Bergabung</option>
+                            </select>
+                            <select name="order" class="form-control" style="width: auto;">
+                                <option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}>A-Z</option>
+                                <option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}>Z-A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        @if (request()->hasAny(['search', 'division', 'batch', 'status', 'position_level', 'sort', 'order']))
+                            <a href="{{ route('admin.members.index') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times"></i> Reset Filter
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Members Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Daftar Anggota Pengurus ({{ $members->total() }} total)
+            </h6>
+        </div>
+        <div class="card-body">
+            @if ($members->count() > 0)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th width="80">Foto</th>
+                                <th>Nama & Posisi</th>
+                                <th>NIM</th>
+                                <th>Divisi</th>
+                                <th>Level</th>
+                                <th>Angkatan</th>
+                                <th>Status</th>
+                                <th>Masa Jabatan</th>
+                                <th width="200">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($members as $member)
+                                <tr class="{{ !$member->is_active ? 'table-secondary' : '' }}">
+                                    <td>
+                                        <div class="position-relative">
+                                            <img src="{{ $member->photo_url }}" alt="{{ $member->name }}"
+                                                class="rounded-circle"
+                                                style="width: 50px; height: 50px; object-fit: cover;">
+                                            @if ($member->student_id)
+                                                <span class="badge badge-success position-absolute"
+                                                    style="top: -5px; right: -5px; font-size: 10px;"
+                                                    title="Terhubung dengan data mahasiswa">
+                                                    <i class="fas fa-link"></i>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $member->name }}</strong>
+                                        <br><span class="text-primary">{{ $member->position }}</span>
+                                        @if ($member->bio)
+                                            <br><small class="text-muted">{{ Str::limit($member->bio, 50) }}</small>
+                                        @endif
+                                    </td>
+                                    <td>{{ $member->nim }}</td>
+                                    <td>
+                                        <span class="badge badge-info">{{ $member->division->name }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge badge-{{ $member->position_level <= 2 ? 'warning' : 'secondary' }}">
+                                            Level {{ $member->position_level }}
+                                        </span>
+                                    </td>
+                                    <td>{{ $member->batch }}</td>
+                                    <td>
+                                        {!! $member->status_badge !!}
+                                        @if (!$member->is_active)
+                                            <br><span class="badge badge-secondary">Inactive</span>
+                                        @endif
+                                        @if ($member->is_alumni)
+                                            <br><span class="badge badge-info">Alumni</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($member->start_date)
+                                            <small>
+                                                Mulai: {{ $member->start_date->format('M Y') }}
+                                                @if ($member->end_date)
+                                                    <br>Berakhir: {{ $member->end_date->format('M Y') }}
+                                                @endif
+                                                @if ($member->tenure)
+                                                    <br>Masa: {{ $member->tenure }} bulan
+                                                @endif
+                                            </small>
+                                        @else
+                                            <small class="text-muted">Tidak diketahui</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="btn-group-vertical btn-group-sm w-100">
+                                            <a href="{{ route('admin.members.show', $member) }}"
+                                                class="btn btn-info btn-sm" title="Detail">
+                                                <i class="fas fa-eye"></i> Detail
+                                            </a>
+                                            <a href="{{ route('admin.members.edit', $member) }}"
+                                                class="btn btn-warning btn-sm" title="Edit">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button class="dropdown-item"
+                                                            onclick="toggleActive({{ $member->id }})">
+                                                            <i
+                                                                class="fas fa-{{ $member->is_active ? 'eye-slash' : 'eye' }}"></i>
+                                                            {{ $member->is_active ? 'Nonaktifkan' : 'Aktifkan' }}
+                                                        </button>
+                                                    </li>
+                                                    @if (!$member->is_alumni && $member->status !== 'alumni')
+                                                        <li>
+                                                            <button class="dropdown-item"
+                                                                onclick="makeAlumni({{ $member->id }})">
+                                                                <i class="fas fa-graduation-cap"></i> Jadikan Alumni
+                                                            </button>
+                                                        </li>
+                                                    @endif
+                                                    @if ($member->student_id)
+                                                        <li>
+                                                            <button class="dropdown-item"
+                                                                onclick="syncFromStudent({{ $member->id }})">
+                                                                <i class="fas fa-sync"></i> Sinkronkan Data
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.students.show', $member->student) }}">
+                                                                <i class="fas fa-external-link-alt"></i> Lihat Data
+                                                                Mahasiswa
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item text-danger"
+                                                            onclick="deleteMember({{ $member->id }})">
+                                                            <i class="fas fa-trash"></i> Hapus
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center">
+                    {{ $members->links() }}
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Tidak ada data anggota</h5>
+                    <p class="text-muted">Belum ada anggota yang terdaftar atau sesuai dengan filter Anda.</p>
+                    <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Anggota Pertama
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        function toggleActive(id) {
+            const action = confirm('Apakah Anda yakin ingin mengubah status aktif anggota ini?');
+
+            if (action) {
+                fetch(`/admin/members/${id}/toggle-active`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Terjadi kesalahan saat mengubah status');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat mengubah status');
+                    });
+            }
+        }
+
+        function makeAlumni(id) {
+            if (confirm('Apakah Anda yakin ingin menjadikan anggota ini sebagai alumni?')) {
+                fetch(`/admin/members/${id}/make-alumni`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Terjadi kesalahan saat mengubah status alumni');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat mengubah status alumni');
+                    });
+            }
+        }
+
+        function syncFromStudent(id) {
+            if (confirm('Sinkronkan data anggota dengan data mahasiswa? Data yang ada akan ditimpa.')) {
+                fetch(`/admin/members/${id}/sync-from-student`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Terjadi kesalahan saat sinkronisasi data');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat sinkronisasi data');
+                    });
+            }
+        }
+
+        function deleteMember(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data anggota ini? Tindakan ini tidak dapat dibatalkan.')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/admin/members/${id}`;
+                form.innerHTML = `
+            <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
+            <input type="hidden" name="_method" value="DELETE">
+        `;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+
+    <style>
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+
+        .btn-group-vertical .btn {
+            margin-bottom: 2px;
+        }
+
+        .btn-group-vertical .btn:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 @endsection

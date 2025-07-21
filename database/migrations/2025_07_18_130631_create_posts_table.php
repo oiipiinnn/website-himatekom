@@ -14,6 +14,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('excerpt');
             $table->longText('content');
+            $table->text('tags')->nullable();
+            $table->integer('reading_time')->nullable();
+            $table->integer('view_count')->default(0);
             $table->string('featured_image')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();

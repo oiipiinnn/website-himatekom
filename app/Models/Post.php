@@ -15,31 +15,82 @@ class Post extends Model
         'slug',
         'excerpt',
         'content',
+        'tags',
         'featured_image',
         'is_published',
         'published_at',
-        'user_id'
+        'user_id',
+        'reading_time',
+        'view_count'
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
+        'tags' => 'array', // Cast ke array untuk JSON field
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            if (!$post->slug) {
+                $post->slug = Str::slug($post->title);
+            }
+
+            // Calculate reading time (average 200 words per minute)
+            $wordCount = str_word_count(strip_tags($post->content));
+            $post->reading_time = max(1, ceil($wordCount / 200));
+        });
+
+        static::updating(function ($post) {
+            if ($post->isDirty('title') && !$post->isDirty('slug')) {
+                $post->slug = Str::slug($post->title);
+            }
+
+            // Recalculate reading time if content changed
+            if ($post->isDirty('content')) {
+                $wordCount = str_word_count(strip_tags($post->content));
+                $post->reading_time = max(1, ceil($wordCount / 200));
+            }
+        });
+    }
+
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function setTitleAttribute($value)
+    // Scopes
+    public function scopePublished($query)
     {
-        $this->attributes['title'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
+        return $query->where('is_published', true)->whereNotNull('published_at');
     }
 
+    public function scopeWithTag($query, $tag)
+    {
+        return $query->where('tags', 'like', '%"' . $tag . '"%');
+    }
+
+    // Accessors
     public function getFeaturedImageUrlAttribute()
     {
-        return $this->featured_image ? asset('storage/' . $this->featured_image) : asset('img/default-post.jpg');
+        if ($this->featured_image) {
+            return asset('storage/' . $this->featured_image);
+        }
+        return asset('img/logo.png');
+    }
+
+    public function getTagsArrayAttribute()
+    {
+        return $this->tags ?? [];
+    }
+
+    public function getTagsStringAttribute()
+    {
+        return $this->tags ? implode(', ', $this->tags) : '';
     }
 
     public function getRouteKeyName()
@@ -47,8 +98,14 @@ class Post extends Model
         return 'slug';
     }
 
-    public function scopePublished($query)
+    public function getReadingTimeTextAttribute()
     {
-        return $query->where('is_published', true)->whereNotNull('published_at');
+        return $this->reading_time . ' min read';
+    }
+
+    // Methods
+    public function incrementViews()
+    {
+        $this->increment('view_count');
     }
 }

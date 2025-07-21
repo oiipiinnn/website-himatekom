@@ -1,8 +1,6 @@
 @extends('admin.layouts.app')
-
 @section('title', 'Edit Post')
 @section('page-title', 'Edit Post')
-
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -28,8 +26,19 @@
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Tags</label>
+                    <input type="text" name="tags" class="form-control @error('tags') is-invalid @enderror"
+                        value="{{ old('tags', $post->tags_string) }}"
+                        placeholder="pisahkan dengan koma, contoh: teknologi, programming, web">
+                    <small class="text-muted">Pisahkan tags dengan koma (,)</small>
+                    @error('tags')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Konten Post *</label>
-                    <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="10" required>{{ old('content', $post->content) }}</textarea>
+                    <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="15" required>{{ old('content', $post->content) }}</textarea>
                     @error('content')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -39,13 +48,15 @@
                     <label class="form-label">Featured Image</label>
                     @if ($post->featured_image)
                         <div class="mb-2">
-                            <img src="{{ $post->featured_image_url }}" width="200" height="120" class="border rounded">
+                            <img src="{{ $post->featured_image_url }}" width="200" height="120"
+                                class="border rounded object-fit-cover">
                             <small class="d-block text-muted">Gambar saat ini</small>
                         </div>
                     @endif
                     <input type="file" name="featured_image"
                         class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Format: JPG, PNG, GIF. Max: 2MB</small>
+                    <small class="text-muted">Format: JPG, PNG, GIF. Max: 2MB. Kosongkan jika tidak ingin mengubah
+                        gambar.</small>
                     @error('featured_image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

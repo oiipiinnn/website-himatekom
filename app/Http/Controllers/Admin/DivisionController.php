@@ -16,6 +16,7 @@ class DivisionController extends Controller
         return view('admin.divisions.index', compact('divisions'));
     }
 
+
     public function create()
     {
         return view('admin.divisions.create');

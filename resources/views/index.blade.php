@@ -23,6 +23,8 @@
                             <div class="hero__text">
                                 <span>Proudly Present</span>
                                 <h2>CORE3D</h2>
+                                <p>CORE3D adalah event tahunan Departemen Teknik Komputer yang berkolaborasi dengan Himpunan
+                                    Mahasiswa Teknik Komputer</p>
                                 <a href="/core3d" class="primary-btn">Tentang CORE3D 2025</a>
                             </div>
                         </div>
@@ -36,7 +38,8 @@
                             <div class="hero__text">
                                 <span>Departemen Kebanggaan Kami</span>
                                 <h2>Teknik Komputer FTI UNAND</h2>
-                                <a href="https://ce.fti.unand.ac.id/" class="primary-btn">Tentang Teknik Komputer</a>
+                                <a href="https://ce.fti.unand.ac.id/" target="_blank" class="primary-btn">Tentang Teknik
+                                    Komputer</a>
                             </div>
                         </div>
                     </div>
@@ -133,7 +136,8 @@
                     <div class="latest__slider owl-carousel">
                         @foreach ($latestPosts as $post)
                             <div class="col-lg-4">
-                                <div class="blog__item latest__item">
+                                <div class="blog__item latest__item"
+                                    data-featured-image="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : asset('img/blog/blog-default.jpg') }}">
                                     <h4>{{ $post->title }}</h4>
                                     <ul>
                                         <li>{{ $post->published_at->format('M d, Y') }}</li>
@@ -159,7 +163,7 @@
     <!-- Latest Blog Section End -->
 
     <!-- Call To Action Section Begin -->
-    <section class="callto spad set-bg" data-setbg="{{ asset('img/callto-bg.jpg') }}">
+    <section class="callto spad set-bg" data-setbg="{{ asset('img/testimonial-bg.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
@@ -220,3 +224,94 @@
     </section>
     <!-- Gallery Section End -->
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk blog hover effect
+            function initBlogHoverEffect() {
+                const blogItems = document.querySelectorAll('.blog__item.latest__item');
+
+                blogItems.forEach(function(item) {
+                    const imageUrl = item.dataset.featuredImage;
+                    const defaultImage = '{{ asset('img/blog/blog-default.jpg') }}';
+
+                    // Hanya apply hover effect jika ada gambar yang valid dan bukan default
+                    if (imageUrl && imageUrl !== defaultImage) {
+                        item.addEventListener('mouseenter', function() {
+                            // Tambah class untuk styling via CSS
+                            this.classList.add('blog-hover-active');
+                            this.style.backgroundImage = `url(${imageUrl})`;
+                        });
+
+                        item.addEventListener('mouseleave', function() {
+                            // Hapus class dan reset background
+                            this.classList.remove('blog-hover-active');
+                            this.style.backgroundImage = '';
+                        });
+                    }
+                });
+            }
+
+            // Initialize effects
+            initBlogHoverEffect();
+
+            // Re-initialize untuk owl carousel setelah dimuat/refresh
+            if ($('.latest__slider').length) {
+                $('.latest__slider').on('initialized.owl.carousel refreshed.owl.carousel', function() {
+                    setTimeout(function() {
+                        initBlogHoverEffect();
+                    }, 200);
+                });
+
+                // Initialize juga saat carousel berubah slide
+                $('.latest__slider').on('changed.owl.carousel', function() {
+                    setTimeout(function() {
+                        initBlogHoverEffect();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+
+    <style>
+        /* CSS khusus untuk blog hover effect - tidak akan overwrite yang existing */
+        .blog__item.latest__item.blog-hover-active {
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Overlay hanya muncul saat ada class blog-hover-active */
+        .blog__item.latest__item.blog-hover-active::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Text styling hanya saat hover dengan background image */
+        .blog__item.latest__item.blog-hover-active h4,
+        .blog__item.latest__item.blog-hover-active p,
+        .blog__item.latest__item.blog-hover-active ul li,
+        .blog__item.latest__item.blog-hover-active a {
+            position: relative;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .blog__item.latest__item.blog-hover-active ul li {
+            color: #ffffff !important;
+        }
+
+        .blog__item.latest__item.blog-hover-active p {
+            color: #ffffff !important;
+        }
+    </style>
+@endpush

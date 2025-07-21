@@ -75,7 +75,7 @@
             @else
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <p>Belum ada aspirasi yang disetujui.</p>
+                        <p>Belum ada aspirasi yang dikumandangkan.</p>
                     </div>
                 </div>
             @endif

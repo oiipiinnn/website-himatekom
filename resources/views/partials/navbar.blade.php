@@ -18,7 +18,7 @@
                     <nav class="header__nav__menu mobile-menu">
                         <ul>
                             <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
-                            <li><a href="/core3d">CORE 3D</a></li>
+                            <li class="{{ Request::is('core3d') ? 'active' : '' }}"><a href="/core3d">CORE3D</a></li>
                             <li class="{{ Request::is('tentang-kami') ? 'active' : '' }}"><a
                                     href="/tentang-kami">Tentang
                                     Kami</a></li>
