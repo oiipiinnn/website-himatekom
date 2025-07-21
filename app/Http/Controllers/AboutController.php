@@ -3,23 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutSetting;
+use App\Models\Division;
+use App\Models\Member;
+use App\Models\Post;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
     public function index()
     {
-        $aboutData = [
-            'title' => AboutSetting::getValue('about_title', 'Siapa Kami?'),
-            'subtitle' => AboutSetting::getValue('about_subtitle', 'Tentang Himatekom'),
-            'description' => AboutSetting::getValue('about_description', 'Himpunan Mahasiswa Teknik Komputer (Himatekom) adalah organisasi mahasiswa yang berdedikasi untuk mendukung pertumbuhan akademik dan profesional anggotanya.'),
-            'history_title' => AboutSetting::getValue('history_title', 'History'),
-            'logo_image' => AboutSetting::getValue('about_logo', 'img/logo.png'),
-            'location_title' => AboutSetting::getValue('location_title', 'Find Us'),
-            'location_subtitle' => AboutSetting::getValue('location_subtitle', 'Our Location'),
-            'location_address' => AboutSetting::getValue('location_address', 'Jalan Limau Manis No. 50, Padang, Sumatera Barat'),
-            'location_office' => AboutSetting::getValue('location_office', 'Sekretariat Himatekom, Fakultas Teknologi Informasi Lt 1'),
+        // Get all about settings
+        $aboutData = AboutSetting::getAll();
+
+        // Get dynamic counts
+        $stats = [
+            'divisions_count' => Division::where('is_active', true)->count(),
+            'members_count' => Member::active()->count(),
+            'program_kerja_count' => (int) AboutSetting::get('program_kerja_count', 25),
+            'main_event_count' => (int) AboutSetting::get('main_event_count', 3),
+            'posts_count' => Post::published()->count(),
+            'galleries_count' => Gallery::count(),
         ];
+
+        // Get misi as array
+        $misi = AboutSetting::getMisi();
+
+        // Merge data
+        $aboutData = array_merge($aboutData, $stats);
+        $aboutData['misi_array'] = $misi;
 
         return view('about', compact('aboutData'));
     }

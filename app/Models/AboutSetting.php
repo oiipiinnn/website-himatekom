@@ -9,23 +9,34 @@ class AboutSetting extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'key',
-        'value',
-        'type'
-    ];
+    protected $fillable = ['key', 'value'];
 
-    public static function getValue($key, $default = null)
+    // Helper method to get setting value
+    public static function get($key, $default = null)
     {
-        $setting = self::where('key', $key)->first();
+        $setting = static::where('key', $key)->first();
         return $setting ? $setting->value : $default;
     }
 
-    public static function setValue($key, $value, $type = 'text')
+    // Helper method to set setting value
+    public static function set($key, $value)
     {
-        return self::updateOrCreate(
+        return static::updateOrCreate(
             ['key' => $key],
-            ['value' => $value, 'type' => $type]
+            ['value' => $value]
         );
+    }
+
+    // Get all settings as key-value array
+    public static function getAll()
+    {
+        return static::pluck('value', 'key')->toArray();
+    }
+
+    // Get misi as array (split by |)
+    public static function getMisi()
+    {
+        $misi = static::get('misi', '');
+        return $misi ? explode('|', $misi) : [];
     }
 }

@@ -46,24 +46,6 @@ Route::get('/ruang-aspirasi', [AspirationController::class, 'index'])->name('asp
 Route::get('/ruang-aspirasi/kirim', [AspirationController::class, 'create'])->name('aspirations.create');
 Route::post('/ruang-aspirasi', [AspirationController::class, 'store'])->name('aspirations.store');
 
-// Legacy redirects
-Route::get('/pengurus/inti', function () {
-    $division = App\Models\Division::where('slug', 'inti')->first();
-    return $division ? redirect()->route('pengurus.show', $division) : abort(404);
-});
-Route::get('/pengurus/internal', function () {
-    $division = App\Models\Division::where('slug', 'internal')->first();
-    return $division ? redirect()->route('pengurus.show', $division) : abort(404);
-});
-Route::get('/pengurus/external', function () {
-    $division = App\Models\Division::where('slug', 'eksternal')->first();
-    return $division ? redirect()->route('pengurus.show', $division) : abort(404);
-});
-Route::get('/pengurus/risbang', function () {
-    $division = App\Models\Division::where('slug', 'risbang')->first();
-    return $division ? redirect()->route('pengurus.show', $division) : abort(404);
-});
-
 // Auth Routes
 require __DIR__ . '/auth.php';
 

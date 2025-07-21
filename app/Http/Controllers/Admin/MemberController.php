@@ -60,11 +60,11 @@ class MemberController extends Controller
             'division_id' => 'required|exists:divisions,id',
             'position_level' => 'required|integer|between:1,4',
             'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date', // FIXED: after_or_equal instead of after
+            'end_date' => 'nullable|date|after_or_equal:start_date',
             'motivation' => 'nullable|string|max:1000',
             'notes' => 'nullable|string|max:2000',
             'status' => 'nullable|in:active,inactive,alumni',
-            'is_active' => 'nullable|boolean', // FIXED: Added nullable
+            'is_active' => 'nullable|boolean',
         ]);
 
         try {
