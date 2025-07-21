@@ -225,7 +225,7 @@
                     </div>
                     <div class="card-body">
                         @foreach ($student->skills as $skill)
-                            <span class="badge badge-primary mr-2 mb-2 p-2">{{ $skill }}</span>
+                            <span class="badge badge-primary mr-2 mb-2 p-2 text-black">{{ $skill }}</span>
                         @endforeach
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="card-body">
                         @foreach ($student->hobbies as $hobby)
-                            <span class="badge badge-info mr-2 mb-2 p-2">{{ $hobby }}</span>
+                            <span class="badge badge-info mr-2 mb-2 p-2 text-black">{{ $hobby }}</span>
                         @endforeach
                     </div>
                 </div>

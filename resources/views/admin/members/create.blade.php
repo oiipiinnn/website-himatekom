@@ -237,7 +237,8 @@
 
                         <div class="student-search-container">
                             <input type="text" id="studentSearch" class="form-control form-control-lg"
-                                placeholder="Contoh: John Doe, 2111522001, atau john@email.com..." autocomplete="off">
+                                placeholder="Contoh: Berka Aldizar, 2211513024, atau student@email.com..."
+                                autocomplete="off">
                             <div class="student-search-results" id="searchResults"></div>
                         </div>
 
@@ -472,7 +473,7 @@
                 selectedStudent = student;
                 document.getElementById('selectedStudentId').value = student.id;
                 document.getElementById('selectedStudentPhoto').src = student
-                .work_photo; // CHANGED: work_photo instead of photo
+                    .work_photo; // CHANGED: work_photo instead of photo
                 document.getElementById('selectedStudentName').textContent = student.name;
                 document.getElementById('selectedStudentNim').textContent = student.nim;
                 document.getElementById('selectedStudentEmail').textContent = student.email;

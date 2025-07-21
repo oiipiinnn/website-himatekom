@@ -2,34 +2,133 @@
 @section('content')
     <style>
         .services-page {
-            padding-top: 150px !important;
+            padding-top: 130px !important;
         }
 
         .member-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
             overflow: hidden;
-            transition: all 0.4s ease;
-            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
             backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative;
         }
 
         .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 103, 56, 0.25);
+            border-color: rgba(0, 103, 56, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .member-photo {
+            height: 220px;
+            width: 100%;
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            position: relative;
+            overflow: hidden;
+        }
+        
+
+        .member-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .member-card:hover .member-photo::before {
+            opacity: 1;
+        }
+        .member-photo::after {
+            content: 'Lihat Profil';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 103, 56, 0.95);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .member-card:hover .member-photo::after {
+            opacity: 1;
+        }
+
+        .member-info {
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-family: "Play", sans-serif;
+            line-height: 1.3;
+        }
+
+        .member-position {
+            font-size: 12px;
+            color: #22c55e;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(0, 103, 56, 0.15);
+            padding: 4px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .leader-section {
+            margin-bottom: 50px;
+        }
+
+        .leader-card {
+            background: linear-gradient(135deg, rgba(0, 103, 56, 0.15), rgba(0, 103, 56, 0.08));
+            border: 2px solid rgba(0, 103, 56, 0.25);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .leader-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 103, 56, 0.3);
             border-color: rgba(0, 103, 56, 0.5);
         }
 
-        .member-photo {
+        .leader-photo {
             height: 280px;
+            width: 100%;
             background-position: center !important;
             background-size: cover !important;
+            background-repeat: no-repeat !important;
             position: relative;
-            overflow: hidden;
         }
 
-        .member-photo::before {
+        .leader-photo::before {
             content: '';
             position: absolute;
             top: 0;
@@ -41,109 +140,141 @@
             transition: opacity 0.3s ease;
         }
 
-        .member-card:hover .member-photo::before {
+        .leader-card:hover .leader-photo::before {
             opacity: 1;
         }
 
-        .member-info {
+        .leader-photo::after {
+            content: 'Lihat Profil';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 103, 56, 0.95);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .leader-card:hover .leader-photo::after {
+            opacity: 1;
+        }
+
+        .leader-info {
             padding: 25px 20px;
             text-align: center;
         }
 
-        .member-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-family: "Play", sans-serif;
-        }
-
-        .member-position {
-            font-size: 14px;
-            color: #006738;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(0, 103, 56, 0.1);
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .leader-section {
-            margin-bottom: 60px;
-        }
-
-        .leader-card {
-            background: linear-gradient(135deg, rgba(0, 103, 56, 0.1), rgba(0, 103, 56, 0.05));
-            border: 2px solid rgba(0, 103, 56, 0.3);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(15px);
-        }
-
-        .leader-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(0, 103, 56, 0.4);
-            border-color: #006738;
-        }
-
-        .leader-photo {
-            height: 350px;
-            background-position: center !important;
-            background-size: cover !important;
-            position: relative;
-        }
-
-        .leader-info {
-            padding: 30px 25px;
-            text-align: center;
-        }
-
         .leader-name {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-family: "Play", sans-serif;
         }
 
         .leader-position {
-            font-size: 16px;
-            color: #006738;
+            font-size: 14px;
+            color: #22c55e;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             background: rgba(0, 103, 56, 0.2);
-            padding: 8px 20px;
-            border-radius: 25px;
+            padding: 6px 16px;
+            border-radius: 20px;
             display: inline-block;
         }
 
         .description-wrapper {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg, rgba(0, 103, 56, 0.08), rgba(0, 103, 56, 0.03));
+            border: 1px solid rgba(0, 103, 56, 0.2);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            margin: 40px auto 60px;
-            max-width: 900px;
-            backdrop-filter: blur(10px);
+            margin: 30px auto 50px;
+            max-width: 850px;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .description-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #006738, #22c55e, #006738);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+
+            0%,
+            100% {
+                background-position: 200% 0;
+            }
+
+            50% {
+                background-position: -200% 0;
+            }
         }
 
         .description-wrapper p {
             margin: 0;
             line-height: 1.8;
             font-size: 16px;
-            color: #333;
+            color: #ffffff;
             text-align: justify;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-button {
+            background: rgba(0, 103, 56, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 103, 56, 1);
+            transform: translateX(-3px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-2px);
         }
 
         .division-image {
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            max-height: 300px;
+            object-fit: cover;
         }
 
         .division-image:hover {
@@ -152,17 +283,19 @@
 
         .section-divider {
             text-align: center;
-            margin: 50px 0 40px;
+            margin: 40px 0 30px;
+            position: relative;
         }
 
         .section-divider h3 {
             color: #ffffff;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
             position: relative;
             display: inline-block;
-            padding: 0 30px;
+            padding: 0 25px;
             background: #0B1215;
+            font-family: "Play", sans-serif;
         }
 
         .section-divider::before {
@@ -178,43 +311,85 @@
 
         .members-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
         }
 
         .leader-grid {
             display: flex;
             justify-content: center;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
-        .leader-card-wrapper {
-            max-width: 400px;
-            width: 100%;
+        .member-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .member-link:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .section-title.center-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .section-title.center-title span {
+            font-size: 14px;
+            margin-bottom: 8px;
         }
 
         @media (max-width: 768px) {
             .services-page {
-                padding-top: 120px !important;
+                padding-top: 110px !important;
             }
 
             .leader-photo {
-                height: 300px;
+                height: 240px;
             }
 
             .member-photo {
-                height: 250px;
+                height: 200px;
             }
 
             .description-wrapper {
-                margin: 30px 15px 40px;
-                padding: 25px 20px;
+                margin: 25px 15px 40px;
+                padding: 20px 15px;
             }
 
             .members-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .member-info {
+                padding: 15px 10px;
+            }
+
+            .leader-info {
+                padding: 20px 15px;
+            }
+
+            .leader-card {
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .members-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .member-photo {
+                height: 180px;
+            }
+
+            .leader-photo {
+                height: 220px;
             }
         }
     </style>
@@ -222,6 +397,12 @@
     <section style="background-image: url({{ asset('img/main-bg.jpg') }}); background-size: cover;"
         class="services-page spad">
         <div class="container">
+            <!-- Back Button -->
+            <a href="{{ route('pengurus') }}" class="back-button">
+                <i class="fa fa-arrow-left"></i>
+                Kembali ke Daftar Divisi
+            </a>
+
             <!-- Header Section -->
             <div class="row">
                 <div class="col-lg-12">
@@ -277,20 +458,22 @@
                 @endphp
 
                 <!-- Leader Section -->
-                @if ($leader)
+                @if ($leader && $leader->student)
                     <div class="leader-section">
                         <div class="section-title center-title">
                             <h2>Pimpinan Divisi</h2>
                         </div>
                         <div class="leader-grid">
                             <div class="leader-card-wrapper">
-                                <div class="leader-card">
-                                    <div class="leader-photo set-bg" data-setbg="{{ $leader->photo_url }}"></div>
-                                    <div class="leader-info">
-                                        <h3 class="leader-name">{{ $leader->name }}</h3>
-                                        <span class="leader-position">{{ $leader->position }}</span>
+                                <a href="{{ route('students.show', $leader->student) }}" class="member-link">
+                                    <div class="leader-card">
+                                        <div class="leader-photo set-bg" data-setbg="{{ $leader->photo_url }}"></div>
+                                        <div class="leader-info">
+                                            <h3 class="leader-name">{{ $leader->name }}</h3>
+                                            <span class="leader-position">{{ $leader->position }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -301,16 +484,19 @@
                     <div class="section-divider">
                         <h3>Anggota Divisi</h3>
                     </div>
-
                     <div class="members-grid">
                         @foreach ($otherMembers as $member)
-                            <div class="member-card">
-                                <div class="member-photo set-bg" data-setbg="{{ $member->photo_url }}"></div>
-                                <div class="member-info">
-                                    <h4 class="member-name">{{ $member->name }}</h4>
-                                    <span class="member-position">{{ $member->position }}</span>
-                                </div>
-                            </div>
+                            @if ($member->student)
+                                <a href="{{ route('students.show', $member->student) }}" class="member-link">
+                                    <div class="member-card">
+                                        <div class="member-photo set-bg" data-setbg="{{ $member->photo_url }}"></div>
+                                        <div class="member-info">
+                                            <h4 class="member-name">{{ $member->name }}</h4>
+                                            <span class="member-position">{{ $member->position }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 @endif

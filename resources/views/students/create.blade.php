@@ -370,7 +370,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label-custom required-field">NIM</label>
                                         <input type="text" name="nim" class="form-control form-control-custom"
-                                            placeholder="Contoh: 2111522001" value="{{ old('nim') }}" required>
+                                            placeholder="Contoh: 2211513024" value="{{ old('nim') }}" required>
                                         @error('nim')
                                             <div class="error-message">
                                                 <i class="fas fa-exclamation-circle"></i> {{ $message }}
@@ -406,14 +406,14 @@
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label-custom required-field">Angkatan</label>
                                         <input type="text" name="batch" class="form-control form-control-custom"
-                                            placeholder="Contoh: 2021" value="{{ old('batch') }}" required>
+                                            placeholder="Contoh: 2022" value="{{ old('batch') }}" required>
                                         @error('batch')
                                             <div class="error-message">
                                                 <i class="fas fa-exclamation-circle"></i> {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-4 mb-4">
                                         <label class="form-label-custom">Jenis Kelamin</label>
                                         <select name="gender" class="form-control form-control-custom">
                                             <option value="">Pilih jenis kelamin</option>
@@ -709,7 +709,8 @@
                                 1024 * 1024;
                             if (file.size > maxSize) {
                                 alert(
-                                    `File terlalu besar. Maksimal ${inputId === 'validation_document' ? '10MB' : '5MB'}.`);
+                                    `File terlalu besar. Maksimal ${inputId === 'validation_document' ? '10MB' : '5MB'}.`
+                                );
                                 this.value = '';
                                 preview.style.display = 'none';
                                 return;

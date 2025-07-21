@@ -19,7 +19,7 @@
         </div>
     </div>
     <!-- Breadcrumb End -->
-
+    
     <section style="background-image: url({{ asset('img/main-bg.jpg') }}); background-size: cover;"
         class="services-page spad">
         <div class="container">
@@ -38,7 +38,8 @@
                             <div class="services__item d-flex flex-column align-items-center">
                                 <div class="services__item__icon">
                                     @if ($division->icon)
-                                        <img src="{{ asset('storage/' . $division->icon) }}" alt="{{ $division->name }}">
+                                        <img src="{{ asset('storage/' . $division->icon) }}" alt="{{ $division->name }}"
+                                            style="width: 70%">
                                     @else
                                         <img src="{{ asset('img/icons/si-1.png') }}" alt="{{ $division->name }}">
                                     @endif
@@ -53,4 +54,3 @@
         </div>
     </section>
 @endsection
-

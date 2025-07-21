@@ -238,7 +238,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label required-field">NIM</label>
                             <input type="text" name="nim" class="form-control form-control-custom"
-                                placeholder="Contoh: 2111522001" value="{{ old('nim') }}" required>
+                                placeholder="Contoh: 2211513024" value="{{ old('nim') }}" required>
                         </div>
                     </div>
 
@@ -495,7 +495,8 @@
                                 1024 * 1024;
                             if (file.size > maxSize) {
                                 alert(
-                                    `File terlalu besar. Maksimal ${inputId === 'validation_document' ? '10MB' : '5MB'}.`);
+                                    `File terlalu besar. Maksimal ${inputId === 'validation_document' ? '10MB' : '5MB'}.`
+                                    );
                                 this.value = '';
                                 preview.style.display = 'none';
                                 return;
