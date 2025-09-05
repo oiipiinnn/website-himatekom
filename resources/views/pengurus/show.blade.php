@@ -6,15 +6,15 @@
         }
 
         .member-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 103, 56, 0.15), rgba(0, 103, 56, 0.08));
+            border: 2px solid rgba(0, 103, 56, 0.25);
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             cursor: pointer;
-            position: relative;
+            max-width: 200px;
+            margin: 0 auto;
         }
 
         .member-card:hover {
@@ -109,7 +109,7 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(15px);
             cursor: pointer;
-            max-width: 320px;
+            max-width: 200px;
             margin: 0 auto;
         }
 

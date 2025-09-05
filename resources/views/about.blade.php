@@ -148,43 +148,42 @@
                             <!-- Event 2020 -->
                             <li class="list-inline-item items-list">
                                 <div class="px-4">
-                                    <div class="event-date badge bg-info">2020</div>
-                                    <h5 class="pt-2">Masa Pandemi</h5>
-                                    <p class="text-muted">Adaptasi digital dan penguatan sistem organisasi internal</p>
+                                    <div class="event-date badge bg-info">2008</div>
+                                    <h5 class="pt-2"></h5>
+                                    <p class="text-muted">SISKOM Berada Di Bawah Naungan HIMATIKA</p>
                                 </div>
                             </li>
                             <!-- Event 2021 -->
                             <li class="list-inline-item items-list">
                                 <div class="px-4">
-                                    <div class="event-date badge bg-success">2021</div>
-                                    <h5 class="pt-2">Digitalisasi</h5>
-                                    <p class="text-muted">Transformasi digital penuh dengan platform online dan hybrid
-                                        events</p>
+                                    <div class="event-date badge bg-success">2009</div>
+                                    <h5 class="pt-2"></h5>
+                                    <p class="text-muted">Berdirinya Forum Mahasiswa Komputer</p>
                                 </div>
                             </li>
                             <!-- Event 2022 -->
                             <li class="list-inline-item items-list">
                                 <div class="px-4">
-                                    <div class="event-date badge bg-warning">2022</div>
-                                    <h5 class="pt-2">New Normal</h5>
-                                    <p class="text-muted">Kembali ke aktivitas normal dengan protokol kesehatan</p>
+                                    <div class="event-date badge bg-warning">2010</div>
+                                    <h5 class="pt-2"></h5>
+                                    <p class="text-muted">Diresmikannya FORMAKOM FMIPA UNAND</p>
                                 </div>
                             </li>
                             <!-- Event 2023 -->
                             <li class="list-inline-item items-list">
                                 <div class="px-4">
-                                    <div class="event-date badge bg-primary">2023</div>
-                                    <h5 class="pt-2">Ekspansi Program</h5>
-                                    <p class="text-muted">Perluasan program kerja dan kolaborasi dengan industri teknologi
+                                    <div class="event-date badge bg-primary">2012</div>
+                                    <h5 class="pt-2"></h5>
+                                    <p class="text-muted">FORMAKOM Bertransformasi Menjadi HMSK FTI UNAND
                                     </p>
                                 </div>
                             </li>
                             <!-- Event 2024 -->
                             <li class="list-inline-item items-list">
                                 <div class="px-4">
-                                    <div class="event-date badge bg-danger">2024</div>
-                                    <h5 class="pt-2">Era CORE3D</h5>
-                                    <p class="text-muted">Peluncuran CORE3D sebagai flagship event teknologi terbesar</p>
+                                    <div class="event-date badge bg-danger">2020</div>
+                                    <h5 class="pt-2"></h5>
+                                    <p class="text-muted">Nama HMSK Berubah Menjadi HIMATEKOM</p>
                                 </div>
                             </li>
                         </ul>

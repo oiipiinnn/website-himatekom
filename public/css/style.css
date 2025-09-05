@@ -145,6 +145,7 @@ ol {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    
 }
 
 .spad {
@@ -508,7 +509,7 @@ ol {
 }
 
 .hero__item {
-    height: 684px;
+    height: 100vh;
     padding-top: 255px;
 }
 
