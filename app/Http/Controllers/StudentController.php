@@ -125,23 +125,17 @@ class StudentController extends Controller
             // Handle file uploads
             // Upload work photo
             if ($request->hasFile('work_photo')) {
-                $workPhoto = $request->file('work_photo');
-                $workPhotoName = 'work_' . time() . '_' . Str::random(10) . '.' . $workPhoto->getClientOriginalExtension();
-                $data['work_photo'] = $workPhoto->storeAs('students/work_photos', $workPhotoName, 'public');
+                $data['work_photo'] = $request->file('work_photo')->store('students/work_photos', 'public');
             }
 
             // Upload casual photo
             if ($request->hasFile('casual_photo')) {
-                $casualPhoto = $request->file('casual_photo');
-                $casualPhotoName = 'casual_' . time() . '_' . Str::random(10) . '.' . $casualPhoto->getClientOriginalExtension();
-                $data['casual_photo'] = $casualPhoto->storeAs('students/casual_photos', $casualPhotoName, 'public');
+                $data['casual_photo'] = $request->file('casual_photo')->store('students/casual_photos', 'public');
             }
 
             // Upload validation document
             if ($request->hasFile('validation_document')) {
-                $validationDoc = $request->file('validation_document');
-                $validationDocName = 'validation_' . time() . '_' . Str::random(10) . '.' . $validationDoc->getClientOriginalExtension();
-                $data['validation_document'] = $validationDoc->storeAs('students/validation_docs', $validationDocName, 'public');
+                $data['validation_document'] = $request->file('validation_document')->store('students/validation_docs', 'public');
             }
 
             // Set default values

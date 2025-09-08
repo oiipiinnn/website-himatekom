@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +42,7 @@ class PostController extends Controller
         }
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = ImageHelper::upload($request->file('featured_image'), 'posts');
+            $data['featured_image'] = $request->file('featured_image')->store('posts', 'public');
         }
 
         if ($request->is_published) {
@@ -83,9 +82,10 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             // Delete old image
-            ImageHelper::delete($post->featured_image);
-            // Upload new image
-            $data['featured_image'] = ImageHelper::upload($request->file('featured_image'), 'posts');
+            if ($post->featured_image) {
+                Storage::disk('public')->delete($post->featured_image);
+            }
+            $data['featured_image'] = $request->file('featured_image')->store('posts', 'public');
         }
 
         // Handle publishing
@@ -103,7 +103,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         // Delete featured image
-        ImageHelper::delete($post->featured_image);
+        if ($post->featured_image) {
+            Storage::disk('public')->delete($post->featured_image);
+        }
 
         $post->delete();
 

@@ -77,7 +77,7 @@
                             @endif
                         </small>
                     </div>
-                </div>
+            </div>
 
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Kembali</a>

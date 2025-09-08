@@ -2,7 +2,6 @@
 // app/Models/Student.php
 namespace App\Models;
 
-use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +10,7 @@ use Carbon\Carbon;
 
 class Student extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory;
 
     protected $fillable = [
         'full_name',
@@ -54,10 +53,6 @@ class Student extends Model
         'show_in_public' => 'boolean',
     ];
 
-    /**
-     * Image fields that should be auto-deleted
-     */
-    protected $imageFields = ['work_photo', 'casual_photo', 'validation_document'];
 
     // Relationships
     public function approver()
@@ -124,17 +119,26 @@ class Student extends Model
     // Accessor for photo URLs
     public function getCasualPhotoUrlAttribute()
     {
-        return $this->getImageUrl('casual_photo', asset('images/default-avatar.png'));
+        if ($this->casual_photo) {
+            return asset('storage/' . $this->casual_photo);
+        }
+        return asset('images/default-avatar.png');
     }
 
     public function getWorkPhotoUrlAttribute()
     {
-        return $this->getImageUrl('work_photo');
+        if ($this->work_photo) {
+            return asset('storage/' . $this->work_photo);
+        }
+        return null;
     }
 
     public function getValidationDocumentUrlAttribute()
     {
-        return $this->getImageUrl('validation_document');
+        if ($this->validation_document) {
+            return asset('storage/' . $this->validation_document);
+        }
+        return null;
     }
 
     // Gender label

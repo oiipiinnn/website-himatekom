@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -25,16 +24,14 @@ class Division extends Model
     ];
 
     /**
-     * Image fields that should be auto-deleted
-     */
-    protected $imageFields = ['icon', 'image'];
-
-    /**
      * Get division icon URL
      */
     public function getIconUrlAttribute()
     {
-        return $this->getImageUrl('icon');
+        if ($this->icon) {
+            return asset('storage/' . $this->icon);
+        }
+        return null;
     }
 
     /**
@@ -42,7 +39,10 @@ class Division extends Model
      */
     public function getDivisionImageUrlAttribute()
     {
-        return $this->getImageUrl('image');
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return null;
     }
 
     public function members()

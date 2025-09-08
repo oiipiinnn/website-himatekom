@@ -16,10 +16,51 @@ class ImageHelper
      * @param string $disk
      * @return string
      */
-    public static function upload(UploadedFile $file, string $directory = 'images', string $disk = 'public'): string
+    public static function upload(UploadedFile $file, string $directory = 'images', string $disk = null): string
     {
+        // ALWAYS use uploads disk for new uploads to avoid hosting permission issues
+        $disk = 'uploads';
+        
         $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
         return $file->storeAs($directory, $filename, $disk);
+    }
+
+    /**
+     * Get the best disk for current environment
+     *
+     * @return string
+     */
+    public static function getBestDisk(): string
+    {
+        // In production/hosting, prefer uploads disk over public
+        if (app()->environment('production') || !self::isStorageLinkWorking()) {
+            return 'uploads';
+        }
+        
+        return 'public';
+    }
+
+    /**
+     * Check if storage link is working properly
+     *
+     * @return bool
+     */
+    public static function isStorageLinkWorking(): bool
+    {
+        $publicStoragePath = public_path('storage');
+        $storageAppPublic = storage_path('app/public');
+        
+        // Check if symbolic link exists and points to correct location
+        if (is_link($publicStoragePath)) {
+            return realpath(readlink($publicStoragePath)) === realpath($storageAppPublic);
+        }
+        
+        // Check if it's a directory (some hosting providers use this)
+        if (is_dir($publicStoragePath)) {
+            return is_readable($publicStoragePath);
+        }
+        
+        return false;
     }
 
     /**
@@ -29,13 +70,30 @@ class ImageHelper
      * @param string $disk
      * @return bool
      */
-    public static function delete(?string $path, string $disk = 'public'): bool
+    public static function delete(?string $path, string $disk = null): bool
     {
         if (!$path) {
             return false;
         }
 
-        return Storage::disk($disk)->delete($path);
+        // Try to delete from both disks to ensure cleanup
+        $deleted = false;
+        $disksToTry = ['uploads', 'public'];
+        
+        foreach ($disksToTry as $currentDisk) {
+            try {
+                if (Storage::disk($currentDisk)->exists($path)) {
+                    if (Storage::disk($currentDisk)->delete($path)) {
+                        $deleted = true;
+                    }
+                }
+            } catch (\Exception $e) {
+                // Continue to next disk if current one fails
+                continue;
+            }
+        }
+
+        return $deleted;
     }
 
     /**
@@ -81,14 +139,43 @@ class ImageHelper
             return $path;
         }
 
-        // If path exists in storage, return storage URL
-        if (Storage::disk($disk)->exists($path)) {
-            return Storage::disk($disk)->url($path);
+        // Smart disk selection and fallback
+        $disksToTry = [$disk];
+        
+        // Add alternative disks for fallback
+        if ($disk === 'public') {
+            $disksToTry[] = 'uploads';
+        } elseif ($disk === 'uploads') {
+            $disksToTry[] = 'public';
         }
 
-        // If path exists in public directory (legacy)
+        foreach ($disksToTry as $currentDisk) {
+            try {
+                // If path exists in current disk, return URL
+                if (Storage::disk($currentDisk)->exists($path)) {
+                    if ($currentDisk === 'uploads') {
+                        // Generate proper URL for uploads disk
+                        return asset('uploads/' . $path);
+                    } else {
+                        // Use Storage disk URL for others
+                        return Storage::disk($currentDisk)->url($path);
+                    }
+                }
+            } catch (\Exception $e) {
+                // Continue to next disk if current one fails
+                continue;
+            }
+        }
+
+        // Try direct public path (legacy support)
         if (file_exists(public_path($path))) {
             return asset($path);
+        }
+
+        // Try uploads directory directly
+        $uploadsPath = 'uploads/' . $path;
+        if (file_exists(public_path($uploadsPath))) {
+            return asset($uploadsPath);
         }
 
         // Return fallback or default
@@ -160,5 +247,68 @@ class ImageHelper
             'height' => $imageInfo[1],
             'mime' => $imageInfo['mime']
         ];
+    }
+
+    /**
+     * Debug image URL generation
+     *
+     * @param string|null $path
+     * @param string $disk
+     * @return array
+     */
+    public static function debugImageUrl(?string $path, string $disk = 'public'): array
+    {
+        $debug = [
+            'input_path' => $path,
+            'input_disk' => $disk,
+            'final_url' => null,
+            'checks' => []
+        ];
+
+        if (!$path) {
+            $debug['checks'][] = 'Path is empty, using default image';
+            $debug['final_url'] = self::getDefaultImage();
+            return $debug;
+        }
+
+        // Check uploads disk
+        try {
+            if (Storage::disk('uploads')->exists($path)) {
+                $debug['checks'][] = 'Found in uploads disk';
+                $debug['final_url'] = asset('uploads/' . $path);
+                return $debug;
+            } else {
+                $debug['checks'][] = 'Not found in uploads disk';
+            }
+        } catch (\Exception $e) {
+            $debug['checks'][] = 'Uploads disk error: ' . $e->getMessage();
+        }
+
+        // Check public disk
+        try {
+            if (Storage::disk('public')->exists($path)) {
+                $debug['checks'][] = 'Found in public disk';
+                $debug['final_url'] = Storage::disk('public')->url($path);
+                return $debug;
+            } else {
+                $debug['checks'][] = 'Not found in public disk';
+            }
+        } catch (\Exception $e) {
+            $debug['checks'][] = 'Public disk error: ' . $e->getMessage();
+        }
+
+        // Check direct public path
+        if (file_exists(public_path($path))) {
+            $debug['checks'][] = 'Found in direct public path';
+            $debug['final_url'] = asset($path);
+            return $debug;
+        } else {
+            $debug['checks'][] = 'Not found in direct public path';
+        }
+
+        $debug['checks'][] = 'File not found anywhere, using default';
+        $debug['final_url'] = self::getDefaultImage();
+
+        return $debug;
     }
 }
