@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
+use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,7 +32,7 @@ class GalleryController extends Controller
         ]);
 
         $data = $request->all();
-        $data['image'] = $request->file('image')->store('galleries', 'public');
+        $data['image'] = ImageHelper::upload($request->file('image'), 'galleries');
 
         Gallery::create($data);
 
@@ -56,10 +57,10 @@ class GalleryController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            if ($gallery->image) {
-                Storage::disk('public')->delete($gallery->image);
-            }
-            $data['image'] = $request->file('image')->store('galleries', 'public');
+            // Delete old image
+            ImageHelper::delete($gallery->image);
+            // Upload new image
+            $data['image'] = ImageHelper::upload($request->file('image'), 'galleries');
         }
 
         $gallery->update($data);
@@ -69,9 +70,8 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        if ($gallery->image) {
-            Storage::disk('public')->delete($gallery->image);
-        }
+        // Delete image file
+        ImageHelper::delete($gallery->image);
 
         $gallery->delete();
 

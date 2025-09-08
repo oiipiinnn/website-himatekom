@@ -1,4 +1,52 @@
 @extends('layouts.main')
+
+@push('styles')
+<style>
+.map-responsive {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.map-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 8px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .map-responsive {
+        padding-bottom: 75%; /* More square ratio for mobile */
+        margin-bottom: 20px;
+    }
+    
+    .about__text__desc ul {
+        padding-left: 20px;
+    }
+    
+    .footer__top__social {
+        justify-content: center !important;
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .map-responsive {
+        padding-bottom: 80%;
+        margin: 0 -15px 20px -15px; /* Full width on small screens */
+    }
+}
+</style>
+@endpush
+
 @section('content')
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option spad set-bg" data-setbg="{{ asset('img/breadcrump-bg.jpg') }}">
@@ -226,11 +274,13 @@
                 <div class="col-lg-6">
                     <div class="about__pic">
                         <div class="row justify-content-center">
-                            <div class="col-lg-8 col-md-8 col-sm-10">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3090413657255!2d100.45834427349827!3d-0.9154688353301946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b7963ede35cf%3A0x10ce49f24233a8ae!2sSekretariat%20Himpunan%20Mahasiswa%20Sistem%20Komputer%20Universitas%20Andalas!5e0!3m2!1sid!2sid!4v1735065233606!5m2!1sid!2sid"
-                                    width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <div class="col-12">
+                                <div class="map-responsive">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3090413657255!2d100.45834427349827!3d-0.9154688353301946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b7963ede35cf%3A0x10ce49f24233a8ae!2sSekretariat%20Himpunan%20Mahasiswa%20Sistem%20Komputer%20Universitas%20Andalas!5e0!3m2!1sid!2sid!4v1735065233606!5m2!1sid!2sid"
+                                        allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
                             </div>
                         </div>
                     </div>

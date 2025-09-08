@@ -47,8 +47,8 @@
                             <label class="form-label">Icon Divisi</label>
                             @if ($division->icon)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $division->icon) }}" width="50" height="50"
-                                        class="border rounded">
+                                    <img src="{{ $division->icon_url }}" width="50"
+                                        height="50" class="border rounded" alt="Icon Divisi">
                                     <small class="d-block text-muted">Icon saat ini</small>
                                 </div>
                             @endif
@@ -65,8 +65,8 @@
                             <label class="form-label">Gambar Divisi</label>
                             @if ($division->image)
                                 <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $division->image) }}" width="100" height="60"
-                                        class="border rounded">
+                                    <img src="{{ $division->division_image_url }}" width="100"
+                                        height="60" class="border rounded" alt="Gambar Divisi">
                                     <small class="d-block text-muted">Gambar saat ini</small>
                                 </div>
                             @endif

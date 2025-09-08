@@ -2,6 +2,7 @@
 // app/Models/Student.php
 namespace App\Models;
 
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +11,7 @@ use Carbon\Carbon;
 
 class Student extends Model
 {
-    use HasFactory;
+    use HasFactory, HasImages;
 
     protected $fillable = [
         'full_name',
@@ -52,6 +53,11 @@ class Student extends Model
         'is_active' => 'boolean',
         'show_in_public' => 'boolean',
     ];
+
+    /**
+     * Image fields that should be auto-deleted
+     */
+    protected $imageFields = ['work_photo', 'casual_photo', 'validation_document'];
 
     // Relationships
     public function approver()
@@ -118,26 +124,17 @@ class Student extends Model
     // Accessor for photo URLs
     public function getCasualPhotoUrlAttribute()
     {
-        if ($this->casual_photo && Storage::disk('public')->exists($this->casual_photo)) {
-            return Storage::disk('public')->url($this->casual_photo);
-        }
-        return asset('images/default-avatar.png');
+        return $this->getImageUrl('casual_photo', asset('images/default-avatar.png'));
     }
 
     public function getWorkPhotoUrlAttribute()
     {
-        if ($this->work_photo && Storage::disk('public')->exists($this->work_photo)) {
-            return Storage::disk('public')->url($this->work_photo);
-        }
-        return null;
+        return $this->getImageUrl('work_photo');
     }
 
     public function getValidationDocumentUrlAttribute()
     {
-        if ($this->validation_document && Storage::disk('public')->exists($this->validation_document)) {
-            return Storage::disk('public')->url($this->validation_document);
-        }
-        return null;
+        return $this->getImageUrl('validation_document');
     }
 
     // Gender label

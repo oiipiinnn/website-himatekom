@@ -30,7 +30,8 @@
                     <label class="form-label">Foto</label>
                     @if ($gallery->image)
                         <div class="mb-2">
-                            <img src="{{ $gallery->image_url }}" width="200" height="120" class="border rounded">
+                            <img src="{{ $gallery->image_url }}" width="200" height="120"
+                                class="border rounded" loading="lazy" alt="{{ $gallery->title }}">
                             <small class="d-block text-muted">Foto saat ini</small>
                         </div>
                     @endif

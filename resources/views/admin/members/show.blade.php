@@ -49,7 +49,8 @@
             <div class="card profile-card shadow mb-4">
                 <div class="card-body text-center">
                     <div class="profile-image-container mb-3">
-                        <img src="{{ $member->photo_url }}" alt="{{ $member->name }}" class="profile-image">
+                        <img src="{{ $member->student->casual_photo_url }}"
+                            alt="{{ $member->name }}" class="profile-image" loading="lazy">
                         @if ($member->student_id)
                             <div class="connection-indicator">
                                 <i class="fas fa-link"></i>
@@ -441,11 +442,11 @@
             border-radius: 20px;
             border: none;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #fff
         }
 
         .profile-image-container {
-            position: relative;
+            position: relative
         }
 
         .profile-image {
@@ -453,61 +454,61 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255, 255, 255, .3);
             margin: 0 auto;
-            display: block;
+            display: block
         }
 
         .connection-indicator {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, .2);
             border-radius: 20px;
             padding: 8px 12px;
             margin-top: 10px;
-            font-size: 0.8rem;
-            backdrop-filter: blur(10px);
+            font-size: .8rem;
+            backdrop-filter: blur(10px)
         }
 
         .profile-name {
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 5px
         }
 
         .profile-position {
             font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 20px;
+            opacity: .9;
+            margin-bottom: 20px
         }
 
         .profile-tags .tag {
-            margin: 3px;
+            margin: 3px
         }
 
         .profile-stats {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .2);
+            padding-top: 20px
         }
 
         .stat-value {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 700
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
+            font-size: .8rem;
+            opacity: .8;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1px
         }
 
         /* Info Cards */
         .info-card {
             border-radius: 15px;
-            border: none;
+            border: none
         }
 
         .card-title {
             color: #2c3e50;
-            font-weight: 600;
+            font-weight: 600
         }
 
         .info-item {
@@ -515,11 +516,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #f8f9fa;
+            border-bottom: 1px solid #f8f9fa
         }
 
         .info-item:last-child {
-            border-bottom: none;
+            border-bottom: none
         }
 
         .info-label {
@@ -527,36 +528,36 @@
             color: #6c757d;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 8px
         }
 
         .info-value {
-            text-align: right;
+            text-align: right
         }
 
         .info-value a {
             color: #4e73df;
-            text-decoration: none;
+            text-decoration: none
         }
 
         .info-value a:hover {
-            text-decoration: underline;
+            text-decoration: underline
         }
 
         /* Detail Items */
         .detail-item {
-            margin-bottom: 20px;
+            margin-bottom: 20px
         }
 
         .detail-item label {
             font-weight: 600;
             color: #2c3e50;
             margin-bottom: 5px;
-            display: block;
+            display: block
         }
 
         .detail-value {
-            color: #495057;
+            color: #495057
         }
 
         /* Text Areas */
@@ -567,72 +568,72 @@
             padding: 15px;
             border-radius: 10px;
             border-left: 4px solid #4e73df;
-            line-height: 1.6;
+            line-height: 1.6
         }
 
-        /* Tags Styling (Same as index) */
+        /* Tags (konsisten dengan index) */
         .tag {
             display: inline-flex;
             align-items: center;
             gap: 4px;
             padding: 6px 12px;
             border-radius: 15px;
-            font-size: 0.75rem;
+            font-size: .75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 2px;
+            letter-spacing: .5px;
+            margin: 2px
         }
 
         .tag-division {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-level-1 {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-level-2 {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-level-3 {
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-level-4 {
             background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-status-active {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-status-inactive {
             background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-status-alumni {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: white;
+            color: #fff
         }
 
         .tag-inactive {
-            opacity: 0.7;
-            text-decoration: line-through;
+            opacity: .7;
+            text-decoration: line-through
         }
 
         /* Timeline */
         .timeline {
             position: relative;
-            padding-left: 30px;
+            padding-left: 30px
         }
 
         .timeline::before {
@@ -642,12 +643,12 @@
             top: 0;
             height: 100%;
             width: 2px;
-            background: #e9ecef;
+            background: #e9ecef
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 20px
         }
 
         .timeline-marker {
@@ -657,28 +658,28 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            border: 2px solid white;
+            border: 2px solid #fff
         }
 
         .timeline-content h6 {
             margin-bottom: 5px;
-            color: #2c3e50;
+            color: #2c3e50
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .profile-stats .row {
-                text-align: center;
+                text-align: center
             }
 
             .info-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 5px;
+                gap: 5px
             }
 
             .info-value {
-                text-align: left;
+                text-align: left
             }
         }
     </style>

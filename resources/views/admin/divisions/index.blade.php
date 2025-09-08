@@ -31,8 +31,8 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>
                                     @if ($division->icon)
-                                        <img src="{{ asset('storage/' . $division->icon) }}" width="30" height="30"
-                                            class="me-2">
+                                        <img src="{{ $division->icon_url }}" width="30"
+                                            height="30" class="me-2">
                                     @endif
                                     {{ $division->name }}
                                 </td>

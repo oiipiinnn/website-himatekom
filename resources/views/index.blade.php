@@ -101,7 +101,7 @@
                         <div class="services__item">
                             <div class="services__item__icon">
                                 @if ($division->icon)
-                                    <img src="{{ asset('storage/' . $division->icon) }}" alt="{{ $division->name }}"
+                                    <img src="{{ $division->icon_url }}" alt="{{ $division->name }}"
                                         style="width: 70%">
                                 @else
                                     <img src="{{ asset('img/icons/si-1.png') }}" alt="{{ $division->name }}">
@@ -138,7 +138,7 @@
                         @foreach ($latestPosts as $post)
                             <div class="col-lg-4">
                                 <div class="blog__item latest__item"
-                                    data-featured-image="{{ $post->featured_image ? asset('storage/' . $post->featured_image) : asset('img/blog/blog-default.jpg') }}">
+                                    data-featured-image="{{ $post->featured_image_url }}">
                                     <h4>{{ $post->title }}</h4>
                                     <ul>
                                         <li>{{ $post->published_at->format('M d, Y') }}</li>

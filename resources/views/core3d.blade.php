@@ -1,4 +1,25 @@
 @extends('layouts.main')
+
+@push('styles')
+<style>
+/* Ensure navbar stays above core3d content */
+.header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    background: rgba(0, 0, 0, 0.95) !important;
+}
+</style>
+@endpush
+
 @section('content')
     <style>
         /* CORE 3D Simplified Styles */
@@ -10,7 +31,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 120px;
+            padding-top: 140px; /* Increased padding to avoid navbar overlap */
+            margin-top: 0;
         }
 
         .core3d-hero::before {
@@ -383,12 +405,26 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .core3d-hero {
+                padding-top: 120px; /* Slightly less padding for mobile */
+                min-height: calc(100vh - 60px);
+            }
+            
             .core3d-logo {
                 font-size: 4rem;
             }
 
             .core3d-year {
                 font-size: 2.5rem;
+            }
+            
+            .core3d-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .core3d-description {
+                font-size: 1rem;
+                padding: 0 15px;
             }
 
             .cta-title {
@@ -406,6 +442,22 @@
 
             .contact-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .core3d-hero {
+                padding-top: 100px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .core3d-logo {
+                font-size: 3rem;
+            }
+            
+            .core3d-year {
+                font-size: 2rem;
             }
         }
     </style>

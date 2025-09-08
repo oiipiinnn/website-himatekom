@@ -14,8 +14,11 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ route('admin.members.export') }}">Export Semua</a></li>
             @foreach ($divisions as $division)
-                <li><a class="dropdown-item" href="{{ route('admin.members.export') }}?division={{ $division->id }}">Export
-                        {{ $division->name }}</a></li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.members.export') }}?division={{ $division->id }}">
+                        Export {{ $division->name }}
+                    </a>
+                </li>
             @endforeach
         </ul>
     </div>
@@ -154,7 +157,7 @@
                     <div class="col-md-6">
                         <div class="d-flex align-items-center">
                             <label class="me-2">Urutkan:</label>
-                            <select name="sort" class="form-control me-2" style="width: auto;">
+                            <select name="sort" class="form-control me-2" style="width:auto;">
                                 <option value="position_level" {{ request('sort') == 'position_level' ? 'selected' : '' }}>
                                     Level Posisi</option>
                                 <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Nama</option>
@@ -163,7 +166,7 @@
                                 <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>Tanggal
                                     Bergabung</option>
                             </select>
-                            <select name="order" class="form-control" style="width: auto;">
+                            <select name="order" class="form-control" style="width:auto;">
                                 <option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}>A-Z</option>
                                 <option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}>Z-A</option>
                             </select>
@@ -210,12 +213,12 @@
                                 <tr class="{{ !$member->is_active ? 'table-secondary' : '' }}">
                                     <td>
                                         <div class="position-relative">
-                                            <img src="{{ $member->photo_url }}" alt="{{ $member->name }}"
-                                                class="rounded-circle"
-                                                style="width: 50px; height: 50px; object-fit: cover;">
+                                            <img src="{{ $member->student->casual_photo_url }}"
+                                                alt="{{ $member->name }}" class="rounded-circle" loading="lazy"
+                                                style="width:50px;height:50px;object-fit:cover;">
                                             @if ($member->student_id)
                                                 <span class="badge bg-success position-absolute"
-                                                    style="top: -5px; right: -5px; font-size: 10px;"
+                                                    style="top:-5px;right:-5px;font-size:10px;"
                                                     title="Terhubung dengan data mahasiswa">
                                                     <i class="fas fa-link"></i>
                                                 </span>
@@ -225,48 +228,39 @@
                                     <td>
                                         <strong>{{ $member->name }}</strong>
                                         <br><span class="text-primary">{{ $member->position }}</span>
-                                        @if ($member->student->bio)
+                                        @if (optional($member->student)->bio)
                                             <br><small
-                                                class="text-muted">{{ Str::limit($member->student->bio, 50) }}</small>
+                                                class="text-muted">{{ \Illuminate\Support\Str::limit($member->student->bio, 50) }}</small>
                                         @endif
                                     </td>
                                     <td>{{ $member->nim }}</td>
-                                    <td>
-                                        <span class="badge bg-primary">{{ $member->division->name }}</span>
-                                    </td>
+                                    <td><span class="badge bg-primary">{{ $member->division->name }}</span></td>
                                     <td>
                                         @if ($member->position_level == 1)
-                                            <span class="badge bg-danger">
-                                                <i class="fas fa-crown"></i> Level {{ $member->position_level }}
-                                            </span>
+                                            <span class="badge bg-danger"><i class="fas fa-crown"></i> Level
+                                                {{ $member->position_level }}</span>
                                         @elseif($member->position_level == 2)
-                                            <span class="badge bg-warning">
-                                                <i class="fas fa-star"></i> Level {{ $member->position_level }}
-                                            </span>
+                                            <span class="badge bg-warning"><i class="fas fa-star"></i> Level
+                                                {{ $member->position_level }}</span>
                                         @elseif($member->position_level == 3)
-                                            <span class="badge bg-info">
-                                                <i class="fas fa-users-cog"></i> Level {{ $member->position_level }}
-                                            </span>
+                                            <span class="badge bg-info"><i class="fas fa-users-cog"></i> Level
+                                                {{ $member->position_level }}</span>
                                         @else
-                                            <span class="badge bg-secondary">
-                                                <i class="fas fa-user"></i> Level {{ $member->position_level }}
-                                            </span>
+                                            <span class="badge bg-secondary"><i class="fas fa-user"></i> Level
+                                                {{ $member->position_level }}</span>
                                         @endif
                                     </td>
                                     <td>{{ $member->batch }}</td>
                                     <td>
                                         @if ($member->status == 'active')
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-check-circle"></i> Aktif
-                                            </span>
+                                            <span class="badge bg-success"><i class="fas fa-check-circle"></i>
+                                                Aktif</span>
                                         @elseif($member->status == 'alumni')
-                                            <span class="badge bg-info">
-                                                <i class="fas fa-graduation-cap"></i> Alumni
-                                            </span>
+                                            <span class="badge bg-info"><i class="fas fa-graduation-cap"></i>
+                                                Alumni</span>
                                         @else
-                                            <span class="badge bg-warning">
-                                                <i class="fas fa-pause-circle"></i> Tidak Aktif
-                                            </span>
+                                            <span class="badge bg-warning"><i class="fas fa-pause-circle"></i> Tidak
+                                                Aktif</span>
                                         @endif
 
                                         @if (!$member->is_active)
@@ -377,106 +371,71 @@
 @section('scripts')
     <script>
         function toggleActive(id) {
-            const action = confirm('Apakah Anda yakin ingin mengubah status aktif anggota ini?');
-
-            if (action) {
-                fetch(`/admin/members/${id}/toggle-active`, {
-                        method: 'PATCH',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            location.reload();
-                        } else {
-                            alert('Terjadi kesalahan saat mengubah status');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat mengubah status');
-                    });
-            }
+            if (!confirm('Apakah Anda yakin ingin mengubah status aktif anggota ini?')) return;
+            fetch(`/admin/members/${id}/toggle-active`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }).then(r => r.ok ? location.reload() : alert('Terjadi kesalahan saat mengubah status'))
+                .catch(() => alert('Terjadi kesalahan saat mengubah status'));
         }
 
         function makeAlumni(id) {
-            if (confirm('Apakah Anda yakin ingin menjadikan anggota ini sebagai alumni?')) {
-                fetch(`/admin/members/${id}/make-alumni`, {
-                        method: 'PATCH',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            location.reload();
-                        } else {
-                            alert('Terjadi kesalahan saat mengubah status alumni');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat mengubah status alumni');
-                    });
-            }
+            if (!confirm('Apakah Anda yakin ingin menjadikan anggota ini sebagai alumni?')) return;
+            fetch(`/admin/members/${id}/make-alumni`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }).then(r => r.ok ? location.reload() : alert('Terjadi kesalahan saat mengubah status alumni'))
+                .catch(() => alert('Terjadi kesalahan saat mengubah status alumni'));
         }
 
         function syncFromStudent(id) {
-            if (confirm('Sinkronkan data anggota dengan data mahasiswa? Data yang ada akan ditimpa.')) {
-                fetch(`/admin/members/${id}/sync-from-student`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            location.reload();
-                        } else {
-                            alert('Terjadi kesalahan saat sinkronisasi data');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat sinkronisasi data');
-                    });
-            }
+            if (!confirm('Sinkronkan data anggota dengan data mahasiswa? Data yang ada akan ditimpa.')) return;
+            fetch(`/admin/members/${id}/sync-from-student`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }).then(r => r.ok ? location.reload() : alert('Terjadi kesalahan saat sinkronisasi data'))
+                .catch(() => alert('Terjadi kesalahan saat sinkronisasi data'));
         }
 
         function deleteMember(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data anggota ini? Tindakan ini tidak dapat dibatalkan.')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = `/admin/members/${id}`;
-                form.innerHTML = `
-            <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
-            <input type="hidden" name="_method" value="DELETE">
-        `;
-                document.body.appendChild(form);
-                form.submit();
-            }
+            if (!confirm('Apakah Anda yakin ingin menghapus data anggota ini? Tindakan ini tidak dapat dibatalkan.'))
+        return;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/admin/members/${id}`;
+            form.innerHTML = `
+                <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
+                <input type="hidden" name="_method" value="DELETE">
+            `;
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 
     <style>
         .border-left-primary {
-            border-left: 0.25rem solid #4e73df !important;
+            border-left: .25rem solid #4e73df !important
         }
 
         .border-left-success {
-            border-left: 0.25rem solid #1cc88a !important;
+            border-left: .25rem solid #1cc88a !important
         }
 
         .border-left-info {
-            border-left: 0.25rem solid #36b9cc !important;
+            border-left: .25rem solid #36b9cc !important
         }
 
         .border-left-warning {
-            border-left: 0.25rem solid #f6c23e !important;
+            border-left: .25rem solid #f6c23e !important
         }
     </style>
 @endsection

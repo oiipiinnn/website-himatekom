@@ -21,8 +21,8 @@
             border-radius: 10px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #4e73df;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            border-left: 4px solid #4e73df
         }
 
         .section-title {
@@ -32,31 +32,31 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.2rem;
+            font-size: 1.2rem
         }
 
         .form-control-custom {
             border-radius: 8px;
             border: 2px solid #e3e6f0;
             padding: 12px 15px;
-            transition: all 0.3s ease;
+            transition: all .3s ease
         }
 
         .form-control-custom:focus {
             border-color: #4e73df;
-            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+            box-shadow: 0 0 0 .2rem rgba(78, 115, 223, .25)
         }
 
         .student-info-card {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
+            color: #fff;
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 25px;
+            margin-bottom: 25px
         }
 
         .student-search-container {
-            position: relative;
+            position: relative
         }
 
         .student-search-results {
@@ -64,29 +64,29 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
             max-height: 400px;
             overflow-y: auto;
             z-index: 1000;
-            display: none;
+            display: none
         }
 
         .student-search-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all .3s ease;
             display: flex;
             align-items: center;
             gap: 15px;
-            color: #333;
+            color: #333
         }
 
         .student-search-item:hover {
-            background: #f8f9fa;
+            background: #f8f9fa
         }
 
         .student-avatar {
@@ -94,29 +94,29 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid white;
+            border: 3px solid #fff
         }
 
         .btn-submit {
             background: linear-gradient(45deg, #4e73df, #224abe);
             border: none;
-            color: white;
+            color: #fff;
             padding: 15px 30px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: all .3s ease
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(78, 115, 223, 0.4);
+            box-shadow: 0 5px 15px rgba(78, 115, 223, .4)
         }
 
         .required-field::after {
             content: " *";
             color: #e74a3b;
-            font-weight: bold;
+            font-weight: bold
         }
     </style>
 
@@ -147,7 +147,8 @@
                 <div class="student-info-card">
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center">
-                            <img src="{{ $member->student->casual_photo_url }}" alt="Student Photo" class="student-avatar">
+                            <img src="{{ $member->student->casual_photo_url }}"
+                                alt="Student Photo" class="student-avatar" loading="lazy">
                         </div>
                         <div class="col-md-8">
                             <h5 class="mb-2"><i class="fas fa-link"></i> Data Mahasiswa Terhubung</h5>
@@ -186,9 +187,7 @@
 
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="changeStudent" name="change_student">
-                        <label class="form-check-label" for="changeStudent">
-                            Ganti ke mahasiswa lain
-                        </label>
+                        <label class="form-check-label" for="changeStudent">Ganti ke mahasiswa lain</label>
                         <small class="d-block text-muted">Centang jika ingin menghubungkan ke mahasiswa yang berbeda</small>
                     </div>
 
@@ -203,8 +202,9 @@
                             <div class="alert alert-info">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img id="previewPhoto" src="" alt="Student Photo" class="img-thumbnail"
-                                            style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img id="previewPhoto" src="{{ asset('images/avatar-placeholder.png') }}"
+                                            alt="Student Photo" class="img-thumbnail"
+                                            style="width:60px;height:60px;object-fit:cover;">
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="mb-1" id="previewName"></h6>
@@ -212,9 +212,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-sm btn-outline-danger"
-                                            onclick="clearNewStudent()">
-                                            Batal
-                                        </button>
+                                            onclick="clearNewStudent()">Batal</button>
                                     </div>
                                 </div>
                             </div>
@@ -226,9 +224,7 @@
 
                 <!-- Position & Division -->
                 <div class="form-section">
-                    <h5 class="section-title">
-                        <i class="fas fa-crown"></i> Jabatan & Divisi
-                    </h5>
+                    <h5 class="section-title"><i class="fas fa-crown"></i> Jabatan & Divisi</h5>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label required-field">Posisi/Jabatan</label>
@@ -279,9 +275,7 @@
             <div class="col-lg-4">
                 <!-- Additional Info -->
                 <div class="form-section">
-                    <h5 class="section-title">
-                        <i class="fas fa-edit"></i> Informasi Tambahan
-                    </h5>
+                    <h5 class="section-title"><i class="fas fa-edit"></i> Informasi Tambahan</h5>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Motivasi Bergabung</label>
@@ -298,9 +292,7 @@
 
                 <!-- Status -->
                 <div class="form-section">
-                    <h5 class="section-title">
-                        <i class="fas fa-cog"></i> Status & Pengaturan
-                    </h5>
+                    <h5 class="section-title"><i class="fas fa-cog"></i> Status & Pengaturan</h5>
 
                     <div class="form-group mb-3">
                         <label class="form-label">Status</label>
@@ -317,9 +309,7 @@
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
                             {{ old('is_active', $member->is_active) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="is_active">
-                            <strong>Pengurus Aktif</strong>
-                        </label>
+                        <label class="form-check-label" for="is_active"><strong>Pengurus Aktif</strong></label>
                         <br><small class="text-muted">Centang jika aktif menjalankan tugas</small>
                     </div>
                 </div>
@@ -344,6 +334,18 @@
     </form>
 
     <script>
+        // URL base untuk disk public (contoh: "/storage")
+        const STORAGE_BASE = "{{ rtrim(asset('storage'), '/') }}";
+        const PLACEHOLDER = "{{ asset('images/avatar-placeholder.png') }}";
+
+        // Helper: bentuk URL storage yang aman dari path relatif
+        function resolveImage(urlOrPath) {
+            if (!urlOrPath) return PLACEHOLDER;
+            const u = String(urlOrPath);
+            if (/^https?:\/\//i.test(u)) return u; // sudah absolute URL
+            return STORAGE_BASE + '/' + u.replace(/^\/+/, '');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const changeStudentCheckbox = document.getElementById('changeStudent');
             const studentSelection = document.getElementById('studentSelection');
@@ -398,18 +400,28 @@
             }
 
             function displaySearchResults(students) {
-                if (students.length === 0) {
+                if (!Array.isArray(students) || students.length === 0) {
                     searchResults.innerHTML = '<div class="p-3 text-muted">Tidak ada mahasiswa ditemukan</div>';
                 } else {
-                    searchResults.innerHTML = students.map(student => `
-                        <div class="student-search-item" onclick="selectNewStudent(${JSON.stringify(student).replace(/"/g, '&quot;')})">
-                            <img src="${student.photo}" alt="${student.name}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">${student.name}</h6>
-                                <small class="text-muted">${student.nim} - ${student.email}</small>
+                    searchResults.innerHTML = students.map(student => {
+                        // Coba beberapa field foto umum; pilih yang ada
+                        const rawPhoto = student.photo || student.casual_photo || student.work_photo || '';
+                        const photo = resolveImage(rawPhoto);
+                        const safeStudent = JSON.stringify(student).replace(/"/g, '&quot;');
+
+                        return `
+                            <div class="student-search-item" onclick="selectNewStudent(${safeStudent})">
+                                <img src="${photo}" alt="${student.name ?? 'Foto'}"
+                                     style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">${student.name ?? '-'}</h6>
+                                    <small class="text-muted">
+                                        ${(student.nim ?? '-') } - ${(student.email ?? '-') }
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
                 searchResults.style.display = 'block';
             }
@@ -419,13 +431,15 @@
                 selectedNewStudent = student;
                 studentIdInput.value = student.id;
 
-                document.getElementById('previewPhoto').src = student.photo;
-                document.getElementById('previewName').textContent = student.name;
-                document.getElementById('previewDetails').textContent = `${student.nim} - ${student.email}`;
+                const rawPhoto = student.photo || student.casual_photo || student.work_photo || '';
+                document.getElementById('previewPhoto').src = resolveImage(rawPhoto);
+                document.getElementById('previewName').textContent = student.name ?? '-';
+                document.getElementById('previewDetails').textContent =
+                    `${student.nim ?? '-'} - ${student.email ?? '-'}`;
 
                 newStudentPreview.style.display = 'block';
                 searchResults.style.display = 'none';
-                studentSearch.value = student.name;
+                studentSearch.value = student.name ?? '';
             };
 
             // Clear new student selection
@@ -471,9 +485,8 @@
             // Form submission
             const form = document.getElementById('memberForm');
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', function() {
                     const submitBtn = form.querySelector('.btn-submit');
-                    const originalText = submitBtn.innerHTML;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
                     submitBtn.disabled = true;
                 });

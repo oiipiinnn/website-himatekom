@@ -48,8 +48,10 @@
                     <label class="form-label">Featured Image</label>
                     @if ($post->featured_image)
                         <div class="mb-2">
-                            <img src="{{ $post->featured_image_url }}" width="200" height="120"
+                            <img src="{{ $post->featured_image_url }}"
+                                alt="{{ $post->title }}" width="200" height="120" loading="lazy"
                                 class="border rounded object-fit-cover">
+
                             <small class="d-block text-muted">Gambar saat ini</small>
                         </div>
                     @endif

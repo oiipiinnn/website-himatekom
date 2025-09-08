@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasImages;
 
     protected $fillable = [
         'title',
@@ -29,6 +30,11 @@ class Post extends Model
         'published_at' => 'datetime',
         'tags' => 'array', // Cast ke array untuk JSON field
     ];
+
+    /**
+     * Image fields that should be auto-deleted
+     */
+    protected $imageFields = ['featured_image'];
 
     protected static function boot()
     {
@@ -77,10 +83,7 @@ class Post extends Model
     // Accessors
     public function getFeaturedImageUrlAttribute()
     {
-        if ($this->featured_image) {
-            return asset('storage/' . $this->featured_image);
-        }
-        return asset('img/logo.png');
+        return $this->getImageUrl('featured_image', asset('img/logo.png'));
     }
 
     public function getTagsArrayAttribute()

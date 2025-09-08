@@ -21,8 +21,8 @@
             border-radius: 10px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #4e73df;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            border-left: 4px solid #4e73df
         }
 
         .section-title {
@@ -32,31 +32,31 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.2rem;
+            font-size: 1.2rem
         }
 
         .form-control-custom {
             border-radius: 8px;
             border: 2px solid #e3e6f0;
             padding: 12px 15px;
-            transition: all 0.3s ease;
+            transition: all .3s ease
         }
 
         .form-control-custom:focus {
             border-color: #4e73df;
-            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+            box-shadow: 0 0 0 .2rem rgba(78, 115, 223, .25)
         }
 
         .student-selection-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #fff;
             border-radius: 15px;
             padding: 30px;
-            margin-bottom: 25px;
+            margin-bottom: 25px
         }
 
         .student-search-container {
-            position: relative;
+            position: relative
         }
 
         .student-search-results {
@@ -64,33 +64,33 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
             max-height: 400px;
             overflow-y: auto;
             z-index: 1000;
-            display: none;
+            display: none
         }
 
         .student-search-item {
             padding: 15px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all .3s ease;
             display: flex;
             align-items: center;
             gap: 15px;
-            color: #333;
+            color: #333
         }
 
         .student-search-item:hover {
-            background: #f8f9fa;
+            background: #f8f9fa
         }
 
         .student-search-item:last-child {
-            border-bottom: none;
+            border-bottom: none
         }
 
         .student-avatar {
@@ -98,7 +98,7 @@
             height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #ddd;
+            border: 2px solid #ddd
         }
 
         .selected-student-card {
@@ -107,53 +107,53 @@
             border-radius: 10px;
             padding: 20px;
             margin-top: 15px;
-            display: none;
+            display: none
         }
 
         .selected-student-card.show {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn .3s ease
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-10px)
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0)
             }
         }
 
         .btn-submit {
             background: linear-gradient(45deg, #4e73df, #224abe);
             border: none;
-            color: white;
+            color: #fff;
             padding: 15px 30px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 16px;
-            transition: all 0.3s ease;
-            min-width: 200px;
+            transition: all .3s ease;
+            min-width: 200px
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(78, 115, 223, 0.4);
+            box-shadow: 0 5px 15px rgba(78, 115, 223, .4)
         }
 
         .btn-submit:disabled {
-            opacity: 0.6;
+            opacity: .6;
             transform: none;
-            box-shadow: none;
+            box-shadow: none
         }
 
         .required-field::after {
             content: " *";
             color: #e74a3b;
-            font-weight: bold;
+            font-weight: bold
         }
 
         .info-note {
@@ -161,13 +161,13 @@
             border: 1px solid #bee5eb;
             border-radius: 8px;
             padding: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 25px
         }
 
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #6c757d;
+            color: #6c757d
         }
     </style>
 
@@ -230,7 +230,6 @@
             <div class="row">
                 <!-- Left Column - Student Selection -->
                 <div class="col-lg-8">
-                    <!-- Student Selection -->
                     <div class="student-selection-card">
                         <h5 class="mb-3"><i class="fas fa-search"></i> Pilih Mahasiswa</h5>
                         <p class="mb-3 opacity-75">Ketik nama, NIM, atau email mahasiswa:</p>
@@ -246,7 +245,7 @@
                             <div class="row align-items-center">
                                 <div class="col-md-2 text-center">
                                     <img id="selectedStudentPhoto" src="" alt="Photo"
-                                        class="img-thumbnail student-avatar">
+                                        class="img-thumbnail student-avatar" loading="lazy">
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="mb-2 text-success"><i class="fas fa-check-circle"></i> Mahasiswa Dipilih</h6>
@@ -336,11 +335,8 @@
 
                 <!-- Right Column - Additional Info -->
                 <div class="col-lg-4">
-                    <!-- Optional Info -->
                     <div class="form-section">
-                        <h5 class="section-title">
-                            <i class="fas fa-edit"></i> Informasi Tambahan
-                        </h5>
+                        <h5 class="section-title"><i class="fas fa-edit"></i> Informasi Tambahan</h5>
 
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle"></i> <strong>Info:</strong>
@@ -374,14 +370,11 @@
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" name="is_active" value="1"
                                 id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="is_active">
-                                <strong>Pengurus Aktif</strong>
-                            </label>
+                            <label class="form-check-label" for="is_active"><strong>Pengurus Aktif</strong></label>
                             <br><small class="text-muted">Centang jika aktif menjalankan tugas</small>
                         </div>
                     </div>
 
-                    <!-- Submit -->
                     <div class="form-section">
                         <button type="submit" class="btn-submit w-100" id="submitBtn" disabled>
                             <i class="fas fa-save"></i> Simpan Anggota Pengurus
@@ -400,6 +393,18 @@
     @endif
 
     <script>
+        // Base URL untuk disk public (contoh: "/storage")
+        const STORAGE_BASE = "{{ rtrim(asset('storage'), '/') }}";
+        const PLACEHOLDER_AVATAR = "{{ asset('images/avatar-placeholder.png') }}";
+
+        // Helper: bentuk URL storage yang aman
+        function resolveImage(urlOrPath) {
+            if (!urlOrPath) return PLACEHOLDER_AVATAR;
+            const u = String(urlOrPath);
+            if (/^https?:\/\//i.test(u)) return u; // sudah absolute URL
+            return STORAGE_BASE + '/' + u.replace(/^\/+/, '');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const studentSearch = document.getElementById('studentSearch');
             const searchResults = document.getElementById('searchResults');
@@ -441,55 +446,62 @@
             }
 
             function displaySearchResults(students) {
-                if (students.length === 0) {
+                if (!Array.isArray(students) || students.length === 0) {
                     searchResults.innerHTML = '<div class="p-3 text-muted">Tidak ada mahasiswa ditemukan</div>';
                 } else {
-                    searchResults.innerHTML = students.map(student => `
-                        <div class="student-search-item" onclick="selectStudent(${JSON.stringify(student).replace(/"/g, '&quot;')})">
-                            <img src="${student.work_photo}" alt="${student.name}" class="student-avatar">
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">${student.name}</h6>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <small class="text-muted">NIM: ${student.nim}</small><br>
-                                        <small class="text-muted">Email: ${student.email}</small>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <small class="text-muted">Angkatan: ${student.batch}</small>
+                    searchResults.innerHTML = students.map(student => {
+                        const photo = resolveImage(student.work_photo);
+                        const safeStudent = JSON.stringify(student).replace(/"/g, '&quot;');
+                        return `
+                            <div class="student-search-item" onclick="selectStudent(${safeStudent})">
+                                <img src="${photo}" alt="${student.name}" class="student-avatar" loading="lazy">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">${student.name}</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <small class="text-muted">NIM: ${student.nim ?? '-'}</small><br>
+                                            <small class="text-muted">Email: ${student.email ?? '-'}</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <small class="text-muted">Angkatan: ${student.batch ?? '-'}</small>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="text-primary">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
                             </div>
-                            <div class="text-primary">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
                 searchResults.style.display = 'block';
             }
 
-            // Select student
+            // Select student (global karena dipanggil inline)
             window.selectStudent = function(student) {
                 selectedStudent = student;
                 document.getElementById('selectedStudentId').value = student.id;
-                document.getElementById('selectedStudentPhoto').src = student
-                    .work_photo; // CHANGED: work_photo instead of photo
-                document.getElementById('selectedStudentName').textContent = student.name;
-                document.getElementById('selectedStudentNim').textContent = student.nim;
-                document.getElementById('selectedStudentEmail').textContent = student.email;
-                document.getElementById('selectedStudentBatch').textContent = student.batch;
+
+                const photoUrl = resolveImage(student.work_photo);
+                document.getElementById('selectedStudentPhoto').src = photoUrl;
+                document.getElementById('selectedStudentPhoto').alt = student.name || 'Photo';
+
+                document.getElementById('selectedStudentName').textContent = student.name ?? '-';
+                document.getElementById('selectedStudentNim').textContent = student.nim ?? '-';
+                document.getElementById('selectedStudentEmail').textContent = student.email ?? '-';
+                document.getElementById('selectedStudentBatch').textContent = student.batch ?? '-';
                 document.getElementById('selectedStudentPhone').textContent = student.phone || 'Tidak tersedia';
 
                 selectedStudentCard.classList.add('show');
                 searchResults.style.display = 'none';
-                studentSearch.value = student.name;
+                studentSearch.value = student.name ?? '';
 
                 // Enable submit button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-save"></i> Simpan Anggota Pengurus';
             };
 
-            // Clear selection
+            // Clear selection (global)
             window.clearSelectedStudent = function() {
                 selectedStudent = null;
                 document.getElementById('selectedStudentId').value = '';
@@ -497,7 +509,6 @@
                 studentSearch.value = '';
                 searchResults.style.display = 'none';
 
-                // Disable submit button
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-save"></i> Pilih Mahasiswa Dulu';
             };
@@ -518,8 +529,6 @@
                         alert('Silakan pilih mahasiswa terlebih dahulu!');
                         return;
                     }
-
-                    const originalText = submitBtn.innerHTML;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
                     submitBtn.disabled = true;
                 });

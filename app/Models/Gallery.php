@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    use HasFactory;
+    use HasFactory, HasImages;
 
     protected $fillable = [
         'title',
@@ -23,8 +24,16 @@ class Gallery extends Model
         'event_date' => 'date'
     ];
 
+    /**
+     * Image fields that should be auto-deleted
+     */
+    protected $imageFields = ['image'];
+
+    /**
+     * Get gallery image URL
+     */
     public function getImageUrlAttribute()
     {
-        return asset('storage/' . $this->image);
+        return $this->getImageUrl('image');
     }
 }

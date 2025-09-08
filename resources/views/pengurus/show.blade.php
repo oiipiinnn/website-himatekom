@@ -418,7 +418,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-md-10">
                         <div class="text-center">
-                            <img class="img-fluid division-image" src="{{ asset('storage/' . $division->image) }}"
+                            <img class="img-fluid division-image" src="{{ $division->division_image_url }}"
                                 alt="{{ $division->name }}">
                         </div>
                     </div>

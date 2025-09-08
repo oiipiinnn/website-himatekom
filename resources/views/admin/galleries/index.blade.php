@@ -15,9 +15,10 @@
             <div class="row">
                 @forelse($galleries as $gallery)
                     <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <img src="{{ $gallery->image_url }}" class="card-img-top"
-                                style="height: 200px; object-fit: cover;">
+                        <div class="card h-100">
+                            <img src="{{ $gallery->image_url }}"
+                                class="card-img-top" alt="{{ $gallery->title }}" loading="lazy"
+                                style="height:200px;object-fit:cover;">
                             <div class="card-body p-2">
                                 <h6 class="card-title mb-1">{{ $gallery->title }}</h6>
                                 @if ($gallery->event_name)
@@ -33,11 +34,10 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST"
-                                        class="d-inline">
+                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Yakin ingin menghapus?')">
+                                        <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
